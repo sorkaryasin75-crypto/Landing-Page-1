@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Admin | Secure Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .sidebar { background: #1e293b; border-right: 1px solid #334155; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid #334155; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        /* Toast */
+        #toast-container { position: fixed; top: 1rem; right: 1rem; z-index: 9999; }
+        .toast { padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem; animation: slideIn 0.3s forwards; color: white; display: flex; gap: 0.5rem; align-items: center;}
+        .toast.success { background-color: #10b981; }
+        .toast.error { background-color: #ef4444; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex">
+
+    <div id="toast-container"></div>
+
+    <!-- Login View -->
+    <div id="view-login" class="fixed inset-0 bg-slate-900 z-50 flex items-center justify-center">
+        <form id="login-form" class="glass-card p-8 rounded-2xl w-full max-w-md shadow-2xl">
+            <div class="text-center mb-8">
+                <i data-lucide="shield" class="w-12 h-12 text-indigo-500 mx-auto mb-2"></i>
+                <h2 class="text-2xl font-bold">Admin Portal</h2>
+                <p class="text-slate-400 text-sm">Authentication Required</p>
+            </div>
+            <div class="space-y-4">
+                <input type="email" id="login-email" required placeholder="Email Address" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-indigo-500">
+                <input type="password" id="login-password" required placeholder="Password" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-indigo-500">
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg transition">Authenticate</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="view-dashboard" class="flex-1 flex hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar w-64 flex flex-col hidden md:flex">
+            <div class="p-6 border-b border-slate-700 flex items-center gap-3">
+                <i data-lucide="server" class="text-indigo-400"></i>
+                <span class="font-bold tracking-wider text-lg">SYSTEM</span>
+            </div>
+            <nav class="flex-1 p-4 space-y-1" id="nav-menu">
+                <button data-tab="tab-analytics" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg bg-indigo-600 text-white text-left"><i data-lucide="activity"></i> Analytics</button>
+                <button data-tab="tab-offers" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left transition"><i data-lucide="briefcase"></i> Offers</button>
+                <button data-tab="tab-content" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left transition"><i data-lucide="layout"></i> Content & Geo</button>
+                <button data-tab="tab-ai" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-amber-400 hover:bg-slate-800 text-left transition relative"><i data-lucide="cpu"></i> AI Engine <span id="ai-badge" class="hidden absolute right-4 w-2 h-2 bg-red-500 rounded-full"></span></button>
+            </nav>
+            <div class="p-4 border-t border-slate-700 text-xs text-slate-500 space-y-2">
+                <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-green-500"></div> Connected</div>
+                <div id="admin-uid-display" class="truncate">UID: ...</div>
+                <button id="btn-publish" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg mt-2 font-medium">Publish Draft</button>
+                <button id="btn-logout" class="w-full py-2 border border-slate-700 hover:bg-slate-800 rounded-lg text-slate-300">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8 overflow-y-auto h-screen bg-slate-900">
+            
+            <!-- Analytics Tab -->
+            <div id="tab-analytics" class="tab-content active">
+                <h1 class="text-2xl font-bold mb-6">Real-Time Analytics</h1>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="text-slate-400 text-sm mb-1">Page Views (30d)</div>
+                        <div class="text-3xl font-bold" id="stat-views">0</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="text-slate-400 text-sm mb-1">CTA Clicks (30d)</div>
+                        <div class="text-3xl font-bold text-indigo-400" id="stat-clicks">0</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="text-slate-400 text-sm mb-1">Avg CTR</div>
+                        <div class="text-3xl font-bold text-emerald-400" id="stat-ctr">0%</div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-xl w-full h-80 relative">
+                    <canvas id="chart-events"></canvas>
+                </div>
+            </div>
+
+            <!-- Offers Tab -->
+            <div id="tab-offers" class="tab-content">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold">Offer Management</h1>
+                    <button id="btn-add-offer" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg text-sm font-medium">Add Offer</button>
+                </div>
+                <div class="glass-card rounded-xl overflow-hidden">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-800 text-slate-300 border-b border-slate-700">
+                            <tr>
+                                <th class="p-4 font-medium">Offer Title</th>
+                                <th class="p-4 font-medium">Target Geo</th>
+                                <th class="p-4 font-medium">Status</th>
+                                <th class="p-4 font-medium text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="offers-list" class="divide-y divide-slate-700"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Content Tab -->
+            <div id="tab-content" class="tab-content">
+                <h1 class="text-2xl font-bold mb-6">Content Configuration (Draft)</h1>
+                <form id="form-content" class="glass-card p-6 rounded-xl space-y-4">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Site Title</label>
+                            <input type="text" id="cfg-title" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Hero Headline</label>
+                            <input type="text" id="cfg-headline" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white">
+                        </div>
+                        <div class="col-span-2 flex items-center gap-2">
+                            <input type="checkbox" id="cfg-agegate" class="w-4 h-4">
+                            <label class="text-sm text-slate-400">Enable 18+ Age Verification Modal</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="bg-indigo-600 px-6 py-2 rounded-lg mt-4 font-medium">Save to Draft</button>
+                </form>
+            </div>
+
+            <!-- AI Engine Tab -->
+            <div id="tab-ai" class="tab-content">
+                <h1 class="text-2xl font-bold text-amber-400 mb-2 flex items-center gap-2"><i data-lucide="cpu"></i> AI System Intelligence</h1>
+                <p class="text-slate-400 mb-8">Compares Public App Feature Manifest against Database Schema.</p>
+                
+                <div id="ai-results" class="space-y-4">
+                    <div class="glass-card p-6 rounded-xl text-center text-slate-400">
+                        Scanning architecture...
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts linked in following section -->
+    <script type="module" src="./admin.js"></script>
+</body>
+</html>
