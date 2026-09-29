@@ -3,949 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meet New People Near You</title>
-    <meta name="description" content="Discover and connect with singles in your area.">
+    <title>Find Local Connections</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Tailwind Config & Custom Styles -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        brand: {
-                            50: 'var(--color-brand-50)',
-                            500: 'var(--color-brand-500)',
-                            600: 'var(--color-brand-600)',
-                            900: 'var(--color-brand-900)',
-                        }
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.5s ease-out',
-                        'slide-up': 'slideUp 0.5s ease-out',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
-                    }
+                    colors: { brand: { 50: '#f5f3ff', 500: '#8b5cf6', 600: '#7c3aed', 900: '#4c1d95' } }
                 }
             }
         }
+        
+        // AI ENGINE: Feature Manifest (Source of Truth for Frontend capabilities)
+        window.APP_FEATURE_MANIFEST = {
+            version: "3.0.0",
+            features: {
+                hero: { version: "1.0", controls: ["headline", "subhead", "ctaText"] },
+                offers: { version: "1.0", controls: ["title", "description", "url", "badge", "active", "targetCountries"] },
+                ageGate: { version: "1.0", controls: ["enabled", "title", "text"] }
+            }
+        };
     </script>
     <style>
-        :root {
-            /* Default Twilight Light Theme */
-            --color-brand-50: #f5f3ff;
-            --color-brand-500: #8b5cf6;
-            --color-brand-600: #7c3aed;
-            --color-brand-900: #4c1d95;
-            --bg-gradient-start: #eef2ff;
-            --bg-gradient-mid: #f5f3ff;
-            --bg-gradient-end: #fdf2f8;
-        }
-        
-        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .dynamic-bg {
-            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-mid), var(--bg-gradient-end));
-            background-size: 200% 200%;
-            animation: gradientMove 15s ease infinite;
-        }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Hide scrollbar for clean look */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        .toast-enter { animation: slideInRight 0.3s forwards; }
-        .toast-leave { animation: fadeOut 0.3s forwards; }
-        
-        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-
-        /* Loader */
-        .spinner { border: 3px solid rgba(139, 92, 246, 0.1); border-left-color: var(--color-brand-600); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #eef2ff, #f5f3ff, #fdf2f8); min-height: 100vh;}
+        .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.5); }
+        .spinner { border: 3px solid rgba(139,92,246,0.1); border-left-color: #7c3aed; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="antialiased text-gray-800 min-h-screen flex flex-col relative dynamic-bg">
-
-    <!-- Toast Container -->
-    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
+<body class="antialiased text-gray-800 flex flex-col relative">
 
     <!-- Global Loader -->
-    <div id="global-loader" class="fixed inset-0 bg-white/80 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden">
-        <div class="spinner w-12 h-12 mb-4"></div>
-        <p class="text-gray-600 font-medium animate-pulse">Loading...</p>
+    <div id="loader" class="fixed inset-0 bg-white/90 z-[100] flex items-center justify-center">
+        <div class="flex flex-col items-center"><div class="spinner w-12 h-12 mb-4"></div><p class="font-medium text-brand-600">Loading connections...</p></div>
     </div>
 
-    <!-- Age Gate Modal -->
-    <div id="age-gate" class="fixed inset-0 bg-gray-900/90 backdrop-blur-md z-[60] flex items-center justify-center hidden opacity-0 transition-opacity duration-500">
-        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl text-center transform scale-95 transition-transform duration-500" id="age-gate-content">
-            <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i data-lucide="alert-triangle" class="w-8 h-8"></i>
-            </div>
-            <h2 class="text-3xl font-bold text-gray-900 mb-2">18+ ONLY</h2>
-            <p class="text-gray-600 mb-8" id="age-gate-text">By entering this website, you confirm that you are 18 years of age or older and consent to viewing adult-oriented dating content.</p>
-            <div class="flex flex-col sm:flex-row gap-3">
-                <button id="btn-age-exit" class="flex-1 px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition">EXIT</button>
-                <button id="btn-age-enter" class="flex-1 px-6 py-3 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-500 transition shadow-lg shadow-brand-500/30">I AM 18 OR OLDER</button>
+    <!-- Age Gate -->
+    <div id="age-gate" class="fixed inset-0 bg-gray-900/95 backdrop-blur-md z-[60] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
+            <i data-lucide="alert-triangle" class="w-12 h-12 text-red-500 mx-auto mb-4"></i>
+            <h2 id="ag-title" class="text-3xl font-bold mb-2">18+ ONLY</h2>
+            <p id="ag-text" class="text-gray-600 mb-8">You must be at least 18 years old to enter.</p>
+            <div class="flex gap-3">
+                <button onclick="window.location.href='https://google.com'" class="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50">EXIT</button>
+                <button id="ag-enter" class="flex-1 py-3 rounded-xl bg-brand-600 text-white font-medium shadow-lg hover:bg-brand-500">I AM 18+</button>
             </div>
         </div>
     </div>
 
-    <!-- VIEW: Public Landing Page -->
-    <div id="view-landing" class="flex-1 flex flex-col min-h-screen hidden">
-        <!-- Navbar -->
-        <nav class="glass-panel sticky top-0 z-40 px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2 font-bold text-xl text-brand-900">
-                <i data-lucide="heart" class="text-brand-500 fill-brand-500"></i>
-                <span id="lp-site-title">DatingConnect</span>
-            </div>
-            <div class="flex items-center gap-2 text-sm text-gray-500 font-medium bg-white/50 px-3 py-1 rounded-full border border-gray-200">
-                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span id="lp-online-count">1,245 Online</span>
-            </div>
-        </nav>
+    <nav class="glass sticky top-0 z-40 px-6 py-4 flex justify-between items-center">
+        <div class="font-bold text-xl text-brand-900 flex items-center gap-2"><i data-lucide="heart" class="text-brand-500"></i> <span id="site-title">DatingConnect</span></div>
+    </nav>
 
-        <!-- Hero & Offers -->
-        <main class="flex-1 flex flex-col items-center justify-center px-4 py-12">
-            <div class="max-w-3xl w-full text-center mb-10 animate-slide-up">
-                <h1 id="lp-headline" class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
-                    Meet Local Singles <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-pink-500">Ready to Connect</span>
-                </h1>
-                <p id="lp-subhead" class="text-lg text-gray-600 max-w-xl mx-auto">
-                    Thousands of adults near <strong id="lp-location" class="text-brand-600">your area</strong> are discovering new connections right now.
-                </p>
-            </div>
-
-            <!-- Offers Container -->
-            <div id="lp-offers-container" class="w-full max-w-md mx-auto space-y-6">
-                <!-- Offers injected via JS -->
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="glass-panel mt-auto py-8 text-center text-gray-500 text-sm">
-            <div class="flex justify-center gap-4 mb-4">
-                <a href="#" class="hover:text-brand-600 transition">Privacy Policy</a>
-                <a href="#" class="hover:text-brand-600 transition">Terms of Service</a>
-                <a href="#" class="hover:text-brand-600 transition">Contact</a>
-            </div>
-            <p>&copy; <span id="current-year"></span> <span id="lp-footer-brand">DatingConnect</span>. All rights reserved. 18+ Only.</p>
-        </footer>
-    </div>
-
-    <!-- VIEW: Admin Login -->
-    <div id="view-admin-login" class="flex-1 flex items-center justify-center min-h-screen hidden">
-        <div class="glass-panel p-8 rounded-2xl w-full max-w-md shadow-xl">
-            <div class="text-center mb-8">
-                <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="lock" class="w-6 h-6"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900">Admin Login</h2>
-                <p class="text-gray-500 text-sm mt-1">Authenticate to access dashboard</p>
-            </div>
-            <form id="form-admin-login" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="login-email" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input type="password" id="login-password" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition">
-                </div>
-                <button type="submit" class="w-full bg-gray-900 text-white font-medium py-3 rounded-lg hover:bg-gray-800 transition flex justify-center items-center gap-2">
-                    <span>Sign In</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
-            </form>
-            <div id="login-fb-warning" class="mt-4 text-xs text-amber-600 bg-amber-50 p-3 rounded-lg hidden border border-amber-200">
-                <i data-lucide="alert-circle" class="w-4 h-4 inline mr-1"></i>
-                Firebase is not configured. Admin panel unavailable.
-            </div>
+    <main class="flex-1 flex flex-col items-center px-4 py-12 w-full max-w-2xl mx-auto">
+        <div class="text-center mb-10 w-full">
+            <h1 id="hero-headline" class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">Meet Local Singles</h1>
+            <p id="hero-subhead" class="text-lg text-gray-600">Discover active members near <strong id="user-location" class="text-brand-600">you</strong>.</p>
         </div>
-    </div>
+        <div id="offers-container" class="w-full space-y-4"></div>
+    </main>
 
-    <!-- VIEW: Admin Dashboard -->
-    <div id="view-admin-dashboard" class="flex-1 flex flex-col md:flex-row min-h-screen hidden bg-gray-50">
-        <!-- Sidebar -->
-        <aside class="w-full md:w-64 bg-white border-r border-gray-200 flex flex-col">
-            <div class="p-4 border-b border-gray-200 flex items-center justify-between">
-                <span class="font-bold text-lg text-gray-800 flex items-center gap-2">
-                    <i data-lucide="settings-2" class="text-brand-600"></i> Admin Panel
-                </span>
-                <button id="btn-mobile-menu" class="md:hidden text-gray-500 hover:text-gray-900">
-                    <i data-lucide="menu"></i>
-                </button>
-            </div>
-            <div id="admin-nav-menu" class="flex-1 py-4 flex flex-col gap-1 px-3 hidden md:flex">
-                <button data-tab="tab-dashboard" class="admin-tab-btn w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg bg-brand-50 text-brand-700">
-                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
-                </button>
-                <button data-tab="tab-offers" class="admin-tab-btn w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition">
-                    <i data-lucide="list" class="w-4 h-4"></i> Offers
-                </button>
-                <button data-tab="tab-settings" class="admin-tab-btn w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition">
-                    <i data-lucide="sliders" class="w-4 h-4"></i> Settings
-                </button>
-                <div class="mt-auto border-t border-gray-200 pt-4 pb-2">
-                    <div id="fb-status-indicator" class="flex items-center gap-2 px-3 py-2 text-xs font-medium text-green-600 mb-2">
-                        <div class="w-2 h-2 rounded-full bg-green-500"></div> Firebase Connected
-                    </div>
-                    <button id="btn-logout" class="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition">
-                        <i data-lucide="log-out" class="w-4 h-4"></i> Logout
-                    </button>
-                </div>
-            </div>
-        </aside>
+    <footer class="glass mt-auto py-8 text-center text-gray-500 text-sm">
+        <p>&copy; <span id="year"></span> <span id="footer-title">DatingConnect</span>. 18+ Only.</p>
+    </footer>
 
-        <!-- Main Admin Content -->
-        <main class="flex-1 p-4 md:p-8 overflow-y-auto max-h-screen">
-            
-            <!-- TAB: Dashboard -->
-            <div id="tab-dashboard" class="admin-tab-content block">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800">Overview</h2>
-                    <a href="#" class="text-sm text-brand-600 hover:underline flex items-center gap-1"><i data-lucide="external-link" class="w-4 h-4"></i> View Live Site</a>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                        <div class="text-gray-500 text-sm font-medium mb-1">Total Page Views</div>
-                        <div class="text-3xl font-bold text-gray-900" id="stat-views">0</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                        <div class="text-gray-500 text-sm font-medium mb-1">Total CTA Clicks</div>
-                        <div class="text-3xl font-bold text-brand-600" id="stat-clicks">0</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                        <div class="text-gray-500 text-sm font-medium mb-1">Click-Through Rate</div>
-                        <div class="text-3xl font-bold text-green-600" id="stat-ctr">0%</div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <div class="p-4 border-b border-gray-200 font-semibold text-gray-800">Quick Actions</div>
-                    <div class="p-6 flex gap-4">
-                        <button onclick="document.querySelector('[data-tab=\'tab-offers\']').click()" class="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-500 transition text-sm">Manage Offers</button>
-                        <button onclick="document.querySelector('[data-tab=\'tab-settings\']').click()" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm">Customize Theme</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB: Offers -->
-            <div id="tab-offers" class="admin-tab-content hidden">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800">CPA Offers</h2>
-                    <button id="btn-add-offer" class="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-500 transition text-sm flex items-center gap-2">
-                        <i data-lucide="plus" class="w-4 h-4"></i> Add Offer
-                    </button>
-                </div>
-
-                <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-                    <table class="w-full text-left text-sm text-gray-600">
-                        <thead class="bg-gray-50 text-gray-700 border-b border-gray-200">
-                            <tr>
-                                <th class="px-4 py-3 font-medium">Offer Name</th>
-                                <th class="px-4 py-3 font-medium">Status</th>
-                                <th class="px-4 py-3 font-medium">Clicks</th>
-                                <th class="px-4 py-3 font-medium text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-offers-list" class="divide-y divide-gray-100">
-                            <!-- Populated by JS -->
-                        </tbody>
-                    </table>
-                    <div id="admin-offers-empty" class="p-8 text-center text-gray-500 hidden">
-                        No offers configured. Click "Add Offer" to start.
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB: Settings -->
-            <div id="tab-settings" class="admin-tab-content hidden">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Landing Page Settings</h2>
-                
-                <form id="form-settings" class="space-y-6">
-                    <!-- General -->
-                    <div class="bg-white p-6 border border-gray-200 rounded-xl shadow-sm">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2"><i data-lucide="layout" class="w-5 h-5 text-gray-400"></i> General Information</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Site Title</label>
-                                <input type="text" id="set-site-title" class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Headline</label>
-                                <input type="text" id="set-headline" class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500">
-                            </div>
-                            <div class="md:col-span-2 flex items-center gap-2 mt-2">
-                                <input type="checkbox" id="set-age-gate" class="w-4 h-4 text-brand-600 rounded">
-                                <label for="set-age-gate" class="text-sm font-medium text-gray-700">Enable 18+ Age Verification Modal</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Appearance -->
-                    <div class="bg-white p-6 border border-gray-200 rounded-xl shadow-sm">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2"><i data-lucide="palette" class="w-5 h-5 text-gray-400"></i> Appearance</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Theme Mode</label>
-                                <select id="set-theme" class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500">
-                                    <option value="twilight">Twilight Light (Purple/Pink)</option>
-                                    <option value="blue">Clean Blue</option>
-                                    <option value="dark">Premium Dark</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Button Text (Default)</label>
-                                <input type="text" id="set-cta-text" class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tracking -->
-                    <div class="bg-white p-6 border border-gray-200 rounded-xl shadow-sm">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2"><i data-lucide="link" class="w-5 h-5 text-gray-400"></i> Tracking & Default Offer</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Default Fallback CPA URL</label>
-                                <input type="url" id="set-fallback-url" placeholder="https://tracking.example.com/click" class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500">
-                                <p class="text-xs text-gray-500 mt-1">Used if an offer doesn't have a specific URL.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end">
-                        <button type="submit" class="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition font-medium">Save All Settings</button>
-                    </div>
-                </form>
-            </div>
-        </main>
-    </div>
-
-    <!-- Offer Modal -->
-    <div id="modal-offer" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-[70] hidden items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div class="p-4 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white">
-                <h3 class="font-bold text-lg text-gray-800" id="modal-offer-title">Add/Edit Offer</h3>
-                <button id="btn-close-modal" class="text-gray-400 hover:text-gray-700"><i data-lucide="x"></i></button>
-            </div>
-            <form id="form-offer" class="p-6 space-y-4">
-                <input type="hidden" id="offer-id">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Offer Title</label>
-                    <input type="text" id="offer-title" required class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <textarea id="offer-desc" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">CPA Destination URL</label>
-                    <input type="url" id="offer-url" required placeholder="https://link.com/?aff=123" class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Badge Text (Optional)</label>
-                        <input type="text" id="offer-badge" placeholder="e.g. Verified" class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">CTA Button Text</label>
-                        <input type="text" id="offer-cta" placeholder="Default from settings if empty" class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-brand-500">
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 mt-4">
-                    <input type="checkbox" id="offer-active" class="w-4 h-4 text-brand-600 rounded" checked>
-                    <label for="offer-active" class="text-sm font-medium text-gray-700">Offer is Active</label>
-                </div>
-                <div class="pt-4 flex justify-end gap-3 border-t border-gray-100">
-                    <button type="button" id="btn-cancel-offer" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-500 transition font-medium">Save Offer</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MAIN APPLICATION LOGIC -->
     <script type="module">
-        // 1. CONFIGURATION SYSTEM
-        // Admin modifies this block to inject their Firebase credentials
-        const firebaseConfig = {
-  apiKey: "AIzaSyDVhHK08A9XYg-RaWozGSorHv0e2pgDzG4",
-  authDomain: "arina-468c4.firebaseapp.com",
-  databaseURL: "https://arina-468c4-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "arina-468c4",
-  storageBucket: "arina-468c4.firebasestorage.app",
-  messagingSenderId: "881029049599",
-  appId: "1:881029049599:web:a641051e14586202d130ca"
-};
-            // Fallback used if Firebase fails or is empty
-            fallback: {
-                settings: {
-                    siteTitle: "DatingConnect",
-                    headline: "Meet Local Singles Ready to Connect",
-                    ageGateEnabled: true,
-                    theme: "twilight",
-                    ctaText: "View Profile",
-                    fallbackUrl: "https://example.com/cpa"
-                },
-                offers: {
-                    "offer1": {
-                        title: "Local Casual Dating",
-                        description: "Find open-minded singles in your area looking to meet up tonight.",
-                        url: "https://example.com/cpa-offer-1",
-                        badge: "Top Rated",
-                        ctaText: "See Who's Online",
-                        active: true
-                    }
-                }
-            }
-        };
-
-        // 2. FIREBASE IMPORTS
+        import { FIREBASE_CONFIG } from './firebase-config.js';
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getDatabase, ref, get, set, update, push, remove, child, increment } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        import { getDatabase, ref, get, push } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-        // 3. GLOBAL STATE
-        let appState = {
-            useFallback: false,
-            app: null,
-            auth: null,
-            db: null,
-            user: null,
-            settings: APP_CONFIG.fallback.settings,
-            offers: APP_CONFIG.fallback.offers,
-            location: "your area"
-        };
+        let app, db, config, geoData = { country: 'US', city: 'your area' }, sessionId;
 
-        // 4. UTILITIES
-        const showToast = (message, type = 'info') => {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            const bg = type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : type === 'warning' ? 'bg-amber-500' : 'bg-gray-800';
-            toast.className = `toast-enter ${bg} text-white px-4 py-3 rounded-lg shadow-lg text-sm font-medium flex items-center gap-2`;
-            toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : type === 'error' ? 'alert-circle' : 'info'}" class="w-4 h-4"></i> ${message}`;
-            container.appendChild(toast);
-            lucide.createIcons();
-            setTimeout(() => {
-                toast.classList.replace('toast-enter', 'toast-leave');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        };
-
-        const setLoading = (show) => document.getElementById('global-loader').classList.toggle('hidden', !show);
-        const $(id) => document.getElementById(id);
-        const generateId = () => Math.random().toString(36).substring(2, 9);
-
-        // 5. INITIALIZATION
         async function init() {
             lucide.createIcons();
-            $('current-year').textContent = new Date().getFullYear();
-            
-            // Try IP API for geo
-            try {
-                const geoReq = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(2000) });
-                const geo = await geoReq.json();
-                if (geo.city) appState.location = geo.city;
-            } catch (e) { /* silent fail to fallback */ }
+            document.getElementById('year').textContent = new Date().getFullYear();
+            sessionId = sessionStorage.getItem('sid') || Math.random().toString(36).substring(2);
+            sessionStorage.setItem('sid', sessionId);
 
-            $('lp-location').textContent = appState.location;
-
-            // Save tracking params
-            const params = new URLSearchParams(window.location.search);
-            ['subid', 'cid', 'clickid', 'source', 'campaign'].forEach(p => {
-                if (params.has(p)) sessionStorage.setItem(`tracking_${p}`, params.get(p));
+            // Store tracking params
+            const urlParams = new URLSearchParams(window.location.search);
+            ['subid', 'cid', 'source', 'campaign'].forEach(p => {
+                if (urlParams.has(p)) sessionStorage.setItem(`tk_${p}`, urlParams.get(p));
             });
 
-            // Initialize Firebase
-            if (APP_CONFIG.firebase.apiKey && APP_CONFIG.firebase.apiKey.length > 10) {
-                try {
-                    appState.app = initializeApp(APP_CONFIG.firebase);
-                    appState.auth = getAuth(appState.app);
-                    appState.db = getDatabase(appState.app);
-                    setupAuthListener();
-                } catch (error) {
-                    console.error("Firebase init failed:", error);
-                    enableFallbackMode();
-                }
-            } else {
-                enableFallbackMode();
-            }
-
-            await loadPublicData();
-            handleRouting();
-            window.addEventListener('hashchange', handleRouting);
-            setupEventListeners();
-        }
-
-        function enableFallbackMode() {
-            appState.useFallback = true;
-            $('fb-status-indicator').innerHTML = `<div class="w-2 h-2 rounded-full bg-amber-500"></div> Local Mode`;
-            $('fb-status-indicator').className = "flex items-center gap-2 px-3 py-2 text-xs font-medium text-amber-600 mb-2";
-            $('login-fb-warning').classList.remove('hidden');
-        }
-
-        // 6. ROUTING & VIEWS
-        function handleRouting() {
-            const hash = window.location.hash || '';
-            const isRoot = hash === '' || hash === '#';
-            
-            $('view-landing').classList.add('hidden');
-            $('view-admin-login').classList.add('hidden');
-            $('view-admin-dashboard').classList.add('hidden');
-
-            if (hash === '#admin') {
-                if (appState.user) {
-                    $('view-admin-dashboard').classList.remove('hidden');
-                    loadAdminData();
-                } else {
-                    $('view-admin-login').classList.remove('hidden');
-                }
-            } else {
-                $('view-landing').classList.remove('hidden');
-                checkAgeGate();
-                // Record page view safely
-                if (!appState.useFallback && !sessionStorage.getItem('pv_recorded')) {
-                    try {
-                        const dbRef = ref(appState.db, 'analytics/pageViews');
-                        set(dbRef, increment(1));
-                        sessionStorage.setItem('pv_recorded', 'true');
-                    } catch (e) {}
-                }
-            }
-        }
-
-        // 7. FIREBASE AUTH
-        function setupAuthListener() {
-            if (appState.useFallback) return;
-            onAuthStateChanged(appState.auth, (user) => {
-                appState.user = user;
-                if (window.location.hash === '#admin') handleRouting();
-            });
-        }
-
-        // 8. DATA LOADING
-        async function loadPublicData() {
-            if (!appState.useFallback) {
-                try {
-                    const dbRef = ref(appState.db);
-                    const snapshot = await get(child(dbRef, 'settings'));
-                    if (snapshot.exists()) appState.settings = { ...appState.settings, ...snapshot.val() };
-                    
-                    const offersSnap = await get(child(dbRef, 'offers'));
-                    if (offersSnap.exists()) appState.offers = offersSnap.val() || {};
-                } catch (e) {
-                    console.error("Failed to load DB, using fallback", e);
-                }
-            }
-            applyTheme();
-            renderLandingPage();
-        }
-
-        async function loadAdminData() {
-            if (appState.useFallback) return;
             try {
-                const dbRef = ref(appState.db, 'analytics');
-                const snap = await get(dbRef);
+                const geoReq = await fetch('https://ipapi.co/json/');
+                geoData = await geoReq.json();
+                document.getElementById('user-location').textContent = geoData.city || geoData.country_name || 'your area';
+            } catch(e) { console.warn("Geo detection failed safely."); }
+
+            try {
+                app = initializeApp(FIREBASE_CONFIG);
+                db = getDatabase(app);
+                
+                const snap = await get(ref(db, 'publishedConfig'));
                 if (snap.exists()) {
-                    const data = snap.val();
-                    const views = data.pageViews || 0;
-                    const clicks = data.clicks || 0;
-                    $('stat-views').textContent = views.toLocaleString();
-                    $('stat-clicks').textContent = clicks.toLocaleString();
-                    $('stat-ctr').textContent = views > 0 ? ((clicks/views)*100).toFixed(1) + '%' : '0%';
+                    config = snap.val();
+                    applyConfig();
+                    logAnalytics('page_view');
+                } else {
+                    showError("Platform configuration is currently empty.");
                 }
-                
-                // Populate Settings Form
-                $('set-site-title').value = appState.settings.siteTitle || '';
-                $('set-headline').value = appState.settings.headline || '';
-                $('set-age-gate').checked = appState.settings.ageGateEnabled !== false;
-                $('set-theme').value = appState.settings.theme || 'twilight';
-                $('set-cta-text').value = appState.settings.ctaText || '';
-                $('set-fallback-url').value = appState.settings.fallbackUrl || '';
-                
-                renderAdminOffers();
-            } catch (e) {
-                showToast("Failed to load analytics. Check permissions.", "error");
+            } catch (err) {
+                console.error(err);
+                showError("System unavailable. Please try again later.");
             }
+            document.getElementById('loader').classList.add('hidden');
         }
 
-        // 9. UI RENDERING
-        function applyTheme() {
-            const t = appState.settings.theme;
-            const r = document.documentElement;
-            if (t === 'blue') {
-                r.style.setProperty('--color-brand-50', '#eff6ff');
-                r.style.setProperty('--color-brand-500', '#3b82f6');
-                r.style.setProperty('--color-brand-600', '#2563eb');
-                r.style.setProperty('--color-brand-900', '#1e3a8a');
-                r.style.setProperty('--bg-gradient-start', '#f0f9ff');
-                r.style.setProperty('--bg-gradient-mid', '#e0f2fe');
-                r.style.setProperty('--bg-gradient-end', '#dbeafe');
-            } else if (t === 'dark') {
-                r.style.setProperty('--color-brand-50', '#1f2937');
-                r.style.setProperty('--color-brand-500', '#f3f4f6');
-                r.style.setProperty('--color-brand-600', '#111827');
-                r.style.setProperty('--color-brand-900', '#ffffff');
-                r.style.setProperty('--bg-gradient-start', '#374151');
-                r.style.setProperty('--bg-gradient-mid', '#1f2937');
-                r.style.setProperty('--bg-gradient-end', '#111827');
-                document.body.classList.replace('text-gray-800', 'text-gray-100');
-            } else {
-                // twilight
-                r.style.setProperty('--color-brand-50', '#f5f3ff');
-                r.style.setProperty('--color-brand-500', '#8b5cf6');
-                r.style.setProperty('--color-brand-600', '#7c3aed');
-                r.style.setProperty('--color-brand-900', '#4c1d95');
-                r.style.setProperty('--bg-gradient-start', '#eef2ff');
-                r.style.setProperty('--bg-gradient-mid', '#f5f3ff');
-                r.style.setProperty('--bg-gradient-end', '#fdf2f8');
-            }
-        }
-
-        function renderLandingPage() {
-            $('lp-site-title').textContent = appState.settings.siteTitle;
-            $('lp-footer-brand').textContent = appState.settings.siteTitle;
+        function applyConfig() {
+            // Apply language/content (Fallback to default en)
+            const lang = config.languages && config.languages[geoData.country_code] ? config.languages[geoData.country_code] : (config.site.defaultLang || 'en');
             
-            // Support simple dynamic text replacement
-            let hl = appState.settings.headline || "Meet Local Singles";
-            hl = hl.replace('{{city}}', appState.location);
+            document.title = config.site?.title || "DatingConnect";
+            document.getElementById('site-title').textContent = config.site?.title || "DatingConnect";
+            document.getElementById('footer-title').textContent = config.site?.title || "DatingConnect";
             
-            // Format headline (split logic for gradient)
-            const words = hl.split(' ');
-            if (words.length > 3) {
-                const lastTwo = words.splice(-2).join(' ');
-                $('lp-headline').innerHTML = `${words.join(' ')} <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-pink-500">${lastTwo}</span>`;
-            } else {
-                $('lp-headline').textContent = hl;
+            if (config.hero) {
+                document.getElementById('hero-headline').innerHTML = (config.hero.headline || "Meet Local Singles").replace('{city}', geoData.city);
+                document.getElementById('hero-subhead').textContent = config.hero.subhead || "";
             }
 
-            const container = $('lp-offers-container');
+            // Age Gate
+            if (config.ageGate?.enabled && !localStorage.getItem('age_verified')) {
+                document.getElementById('age-gate').classList.remove('hidden');
+                document.getElementById('age-gate').classList.add('flex');
+                document.getElementById('ag-enter').onclick = () => {
+                    localStorage.setItem('age_verified', 'true');
+                    document.getElementById('age-gate').classList.add('hidden');
+                };
+            }
+
+            // Render Offers based on Geo Rules
+            const container = document.getElementById('offers-container');
             container.innerHTML = '';
             
-            const activeOffers = Object.entries(appState.offers || {}).filter(([_, o]) => o.active);
-            
-            if (activeOffers.length === 0) {
-                container.innerHTML = `<div class="glass-panel p-8 text-center rounded-2xl"><p class="text-gray-500">No active offers available in your area right now.</p></div>`;
+            const validOffers = Object.entries(config.offers || {}).filter(([_, o]) => {
+                if (!o.active) return false;
+                if (o.targetCountries && o.targetCountries !== 'ALL' && !o.targetCountries.includes(geoData.country_code)) return false;
+                return true;
+            });
+
+            if (validOffers.length === 0) {
+                container.innerHTML = `<div class="glass p-6 text-center text-gray-500 rounded-xl">No active offers for your region.</div>`;
                 return;
             }
 
-            activeOffers.forEach(([id, offer]) => {
+            validOffers.forEach(([id, offer]) => {
                 const card = document.createElement('div');
-                card.className = "glass-panel rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group";
+                card.className = "glass p-6 rounded-2xl shadow-sm flex items-start gap-4 hover:shadow-md transition relative";
+                const badge = offer.badge ? `<span class="absolute top-3 right-3 bg-brand-100 text-brand-700 text-xs font-bold px-2 py-1 rounded-full">${offer.badge}</span>` : '';
                 
-                let badgeHTML = '';
-                if (offer.badge) {
-                    badgeHTML = `<div class="absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-sm"><i data-lucide="star" class="w-3 h-3 fill-amber-500"></i> ${offer.badge}</div>`;
-                }
-
-                const ctaText = offer.ctaText || appState.settings.ctaText || "Get Started";
-
                 card.innerHTML = `
-                    ${badgeHTML}
-                    <div class="flex items-start gap-4">
-                        <div class="w-14 h-14 bg-gradient-to-br from-brand-100 to-pink-100 rounded-full flex items-center justify-center shrink-0 border border-white">
-                            <i data-lucide="heart-handshake" class="w-6 h-6 text-brand-600"></i>
-                        </div>
-                        <div class="flex-1 pr-16">
-                            <h3 class="text-xl font-bold text-gray-900 mb-1">${offer.title}</h3>
-                            <p class="text-sm text-gray-600 mb-4 line-clamp-2">${offer.description}</p>
-                            <button data-cpa="${id}" class="cta-trigger w-full sm:w-auto px-6 py-3 bg-brand-600 text-white rounded-xl font-medium shadow-lg shadow-brand-500/30 hover:bg-brand-500 transition-all active:scale-95 flex items-center justify-center gap-2">
-                                <span>${ctaText}</span>
-                                <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                            </button>
-                        </div>
+                    ${badge}
+                    <div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center shrink-0"><i data-lucide="zap" class="text-brand-600"></i></div>
+                    <div class="flex-1 pr-12">
+                        <h3 class="font-bold text-lg text-gray-900">${offer.title}</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-4">${offer.description}</p>
+                        <button data-offer-id="${id}" class="cta-btn w-full py-3 bg-brand-600 text-white rounded-xl font-medium shadow-lg hover:bg-brand-500 transition">${offer.ctaText || 'Continue'}</button>
                     </div>
                 `;
                 container.appendChild(card);
             });
             lucide.createIcons();
-        }
-
-        function renderAdminOffers() {
-            const list = $('admin-offers-list');
-            list.innerHTML = '';
-            const entries = Object.entries(appState.offers || {});
             
-            $('admin-offers-empty').classList.toggle('hidden', entries.length > 0);
-            
-            entries.forEach(([id, offer]) => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-gray-50 transition";
-                tr.innerHTML = `
-                    <td class="px-4 py-4 font-medium text-gray-900">${offer.title}</td>
-                    <td class="px-4 py-4">
-                        <span class="px-2 py-1 text-xs font-medium rounded-full ${offer.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}">
-                            ${offer.active ? 'Active' : 'Inactive'}
-                        </span>
-                    </td>
-                    <td class="px-4 py-4 text-gray-500">${offer.clicks || 0}</td>
-                    <td class="px-4 py-4 text-right space-x-2">
-                        <button data-edit="${id}" class="text-brand-600 hover:text-brand-800"><i data-lucide="edit-2" class="w-4 h-4 inline"></i></button>
-                        <button data-delete="${id}" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4 inline"></i></button>
-                    </td>
-                `;
-                list.appendChild(tr);
+            // CTA Listener
+            document.querySelectorAll('.cta-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => handleCTA(e.target.dataset.offerId));
             });
-            lucide.createIcons();
         }
 
-        // 10. CENTRALIZED CTA & TRACKING LOGIC
-        async function handleCTAClick(offerId) {
-            const offer = appState.offers[offerId];
-            if (!offer) return;
+        async function handleCTA(offerId) {
+            const offer = config.offers[offerId];
+            if (!offer || !offer.url) return;
             
-            const btn = document.querySelector(`button[data-cpa="${offerId}"]`);
-            if (btn) btn.innerHTML = `<div class="spinner w-5 h-5 mx-auto"></div>`;
+            logAnalytics('cta_click', { offerId });
+            
+            let destUrl = new URL(offer.url);
+            ['subid', 'cid', 'source', 'campaign'].forEach(p => {
+                const val = sessionStorage.getItem(`tk_${p}`);
+                if (val) destUrl.searchParams.set(p, val);
+            });
+            
+            const btn = document.querySelector(`[data-offer-id="${offerId}"]`);
+            btn.innerHTML = `<div class="spinner w-5 h-5 mx-auto border-white border-l-transparent"></div>`;
+            
+            setTimeout(() => window.location.href = destUrl.toString(), 300);
+        }
 
-            // Increment Click
-            if (!appState.useFallback) {
-                try {
-                    const dbRef = ref(appState.db);
-                    update(dbRef, {
-                        [`analytics/clicks`]: increment(1),
-                        [`offers/${offerId}/clicks`]: increment(1)
-                    });
-                } catch (e) {}
-            }
-
-            // Construct Final URL
-            let base = offer.url || appState.settings.fallbackUrl;
-            if (!base) {
-                showToast("Offer URL not configured", "error");
-                if (btn) btn.innerHTML = `<span>Error</span>`;
-                return;
-            }
-
+        function logAnalytics(type, extra = {}) {
             try {
-                let outUrl = new URL(base);
-                // Append all saved sessionStorage tracking params
-                ['subid', 'cid', 'clickid', 'source', 'campaign'].forEach(p => {
-                    const val = sessionStorage.getItem(`tracking_${p}`);
-                    if (val) outUrl.searchParams.set(p, val);
+                push(ref(db, 'analytics/events'), {
+                    type,
+                    ts: Date.now(),
+                    sessionId,
+                    country: geoData.country_code || 'XX',
+                    device: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+                    ...extra
                 });
-                
-                // Simulate delay for realism/UX
-                setTimeout(() => {
-                    window.location.href = outUrl.toString();
-                }, 600);
-            } catch(e) {
-                showToast("Invalid Offer URL structure", "error");
-                if (btn) btn.innerHTML = `<span>Error</span>`;
-            }
+            } catch(e) { /* non-blocking */ }
         }
 
-        // 11. EVENT LISTENERS
-        function setupEventListeners() {
-            // Age Gate
-            $('btn-age-exit').onclick = () => window.location.href = "https://google.com";
-            $('btn-age-enter').onclick = () => {
-                localStorage.setItem('ageVerified', 'true');
-                $('age-gate').style.opacity = '0';
-                $('age-gate-content').style.transform = 'scale(0.95)';
-                setTimeout(() => $('age-gate').classList.add('hidden'), 500);
-            };
-
-            // Admin Login
-            $('form-admin-login').onsubmit = async (e) => {
-                e.preventDefault();
-                if (appState.useFallback) return showToast("Firebase not configured", "error");
-                
-                setLoading(true);
-                try {
-                    await signInWithEmailAndPassword(appState.auth, $('login-email').value, $('login-password').value);
-                    showToast("Login successful", "success");
-                    window.location.hash = '#admin';
-                } catch (error) {
-                    showToast(error.message.replace('Firebase: ', ''), "error");
-                }
-                setLoading(false);
-            };
-
-            // Admin Logout
-            $('btn-logout').onclick = async () => {
-                if (!appState.useFallback) await signOut(appState.auth);
-                appState.user = null;
-                window.location.hash = '';
-            };
-
-            // Admin Tabs
-            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-                btn.onclick = (e) => {
-                    document.querySelectorAll('.admin-tab-btn').forEach(b => {
-                        b.classList.remove('bg-brand-50', 'text-brand-700');
-                        b.classList.add('text-gray-600');
-                    });
-                    e.currentTarget.classList.add('bg-brand-50', 'text-brand-700');
-                    e.currentTarget.classList.remove('text-gray-600');
-                    
-                    document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.add('hidden'));
-                    $(e.currentTarget.dataset.tab).classList.remove('hidden');
-                    $(e.currentTarget.dataset.tab).classList.add('block');
-                };
-            });
-
-            // Mobile menu
-            $('btn-mobile-menu').onclick = () => {
-                $('admin-nav-menu').classList.toggle('hidden');
-            };
-
-            // Save Settings
-            $('form-settings').onsubmit = async (e) => {
-                e.preventDefault();
-                if (appState.useFallback) return showToast("Cannot save in local fallback mode", "warning");
-                
-                setLoading(true);
-                const newSettings = {
-                    siteTitle: $('set-site-title').value,
-                    headline: $('set-headline').value,
-                    ageGateEnabled: $('set-age-gate').checked,
-                    theme: $('set-theme').value,
-                    ctaText: $('set-cta-text').value,
-                    fallbackUrl: $('set-fallback-url').value
-                };
-
-                try {
-                    await set(ref(appState.db, 'settings'), newSettings);
-                    appState.settings = newSettings;
-                    applyTheme();
-                    renderLandingPage();
-                    showToast("Settings saved successfully", "success");
-                } catch (err) {
-                    showToast("Error saving settings", "error");
-                }
-                setLoading(false);
-            };
-
-            // Offers Modal Logic
-            const modal = $('modal-offer');
-            const closeOfferModal = () => { modal.classList.add('hidden'); modal.classList.remove('flex'); };
-            const openOfferModal = (id = null) => {
-                modal.classList.remove('hidden'); modal.classList.add('flex');
-                if (id && appState.offers[id]) {
-                    const o = appState.offers[id];
-                    $('offer-id').value = id;
-                    $('offer-title').value = o.title || '';
-                    $('offer-desc').value = o.description || '';
-                    $('offer-url').value = o.url || '';
-                    $('offer-badge').value = o.badge || '';
-                    $('offer-cta').value = o.ctaText || '';
-                    $('offer-active').checked = o.active !== false;
-                    $('modal-offer-title').textContent = 'Edit Offer';
-                } else {
-                    $('form-offer').reset();
-                    $('offer-id').value = '';
-                    $('modal-offer-title').textContent = 'Add Offer';
-                }
-            };
-
-            $('btn-add-offer').onclick = () => openOfferModal();
-            $('btn-close-modal').onclick = closeOfferModal;
-            $('btn-cancel-offer').onclick = closeOfferModal;
-
-            // Save Offer
-            $('form-offer').onsubmit = async (e) => {
-                e.preventDefault();
-                if (appState.useFallback) return showToast("Cannot save in local fallback mode", "warning");
-
-                setLoading(true);
-                const id = $('offer-id').value || push(ref(appState.db, 'offers')).key;
-                const offerData = {
-                    title: $('offer-title').value,
-                    description: $('offer-desc').value,
-                    url: $('offer-url').value,
-                    badge: $('offer-badge').value,
-                    ctaText: $('offer-cta').value,
-                    active: $('offer-active').checked
-                };
-
-                try {
-                    await set(ref(appState.db, `offers/${id}`), offerData);
-                    if (!appState.offers) appState.offers = {};
-                    appState.offers[id] = offerData;
-                    renderAdminOffers();
-                    renderLandingPage();
-                    closeOfferModal();
-                    showToast("Offer saved", "success");
-                } catch (err) {
-                    showToast("Failed to save offer", "error");
-                }
-                setLoading(false);
-            };
-
-            // Delegate events for dynamically created buttons (CTA, Edit, Delete)
-            document.addEventListener('click', async (e) => {
-                const cta = e.target.closest('.cta-trigger');
-                if (cta) {
-                    e.preventDefault();
-                    handleCTAClick(cta.dataset.cpa);
-                }
-
-                const editBtn = e.target.closest('[data-edit]');
-                if (editBtn) openOfferModal(editBtn.dataset.edit);
-
-                const delBtn = e.target.closest('[data-delete]');
-                if (delBtn) {
-                    if (appState.useFallback) return showToast("Cannot delete in local mode", "warning");
-                    if (confirm("Are you sure you want to delete this offer?")) {
-                        const id = delBtn.dataset.delete;
-                        try {
-                            await remove(ref(appState.db, `offers/${id}`));
-                            delete appState.offers[id];
-                            renderAdminOffers();
-                            renderLandingPage();
-                            showToast("Offer deleted", "success");
-                        } catch (err) {
-                            showToast("Delete failed", "error");
-                        }
-                    }
-                }
-            });
+        function showError(msg) {
+            document.getElementById('offers-container').innerHTML = `<div class="p-6 bg-red-50 text-red-700 rounded-xl text-center">${msg}</div>`;
         }
 
-        function checkAgeGate() {
-            if (appState.settings.ageGateEnabled !== false) {
-                if (localStorage.getItem('ageVerified') !== 'true') {
-                    const modal = $('age-gate');
-                    modal.classList.remove('hidden');
-                    // Small delay to trigger CSS transition
-                    setTimeout(() => {
-                        modal.style.opacity = '1';
-                        $('age-gate-content').style.transform = 'scale(1)';
-                    }, 50);
-                }
-            }
-        }
-
-        // START APP
         window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
