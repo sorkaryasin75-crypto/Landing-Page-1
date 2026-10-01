@@ -27,21 +27,22 @@
           },
           colors: {
             brand: {
-              50: '#f5f3ff',
-              100: '#ede9fe',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              700: '#6d28d9',
+              50: 'var(--color-brand-50)',
+              100: 'var(--color-brand-100)',
+              500: 'var(--color-brand-500)',
+              600: 'var(--color-brand-600)',
+              700: 'var(--color-brand-700)',
             },
             accent: {
-              500: '#ec4899',
-              600: '#db2777',
+              500: 'var(--color-accent-500)',
+              600: 'var(--color-accent-600)',
             }
           },
           animation: {
             'float': 'floating 3s ease-in-out infinite',
             'pulse-glow': 'pulseGlow 2s infinite',
             'gradient-bg': 'gradientBg 10s ease infinite',
+            'shimmer': 'shimmer 2s linear infinite',
             'spin-slow': 'spin 12s linear infinite',
           },
           keyframes: {
@@ -57,6 +58,10 @@
               '0%': { backgroundPosition: '0% 50%' },
               '50%': { backgroundPosition: '100% 50%' },
               '100%': { backgroundPosition: '0% 50%' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' }
             }
           }
         }
