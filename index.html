@@ -1,515 +1,1357 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" class="h-full scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Live Tracking & Portal System</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Vector Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Visual Motion / Animated Elements (GIF Style Motion Effects) -->
-    <style>
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); transform: scale(1); }
-            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 1); transform: scale(1.02); }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title id="meta-title">Verified Adults Matchmaking & Local Connection Engine</title>
+  <meta id="meta-desc" name="description" content="Connect with real, verified adult singles in your exact location today. Safe, private, and secure matchmaking.">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <link rel="icon" id="site-favicon" href="https://cdn-icons-png.flaticon.com/512/2589/2589175.png">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Hind Siliguri"', '"Outfit"', 'sans-serif'],
+            heading: ['"Outfit"', '"Hind Siliguri"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: 'var(--color-brand-50)',
+              100: 'var(--color-brand-100)',
+              500: 'var(--color-brand-500)',
+              600: 'var(--color-brand-600)',
+              700: 'var(--color-brand-700)',
+            },
+            accent: {
+              500: 'var(--color-accent-500)',
+              600: 'var(--color-accent-600)',
+            }
+          },
+          animation: {
+            'float': 'floating 3s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 2s infinite',
+            'gradient-bg': 'gradientBg 10s ease infinite',
+            'shimmer': 'shimmer 2s linear infinite',
+            'spin-slow': 'spin 12s linear infinite',
+          },
+          keyframes: {
+            floating: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 20px rgba(236, 72, 153, 0.5), 0 0 40px rgba(124, 58, 237, 0.3)' },
+              '50%': { boxShadow: '0 0 35px rgba(236, 72, 153, 0.9), 0 0 60px rgba(124, 58, 237, 0.6)' },
+            },
+            gradientBg: {
+              '0%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+              '100%': { backgroundPosition: '0% 50%' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' }
+            }
+          }
         }
-        @keyframes radarScan {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes gradientBg {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes floatEffect {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-        .gif-motion-card {
-            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #172554, #0f172a);
-            background-size: 400% 400%;
-            animation: gradientBg 10s ease infinite;
-        }
-        .pulse-live {
-            animation: pulseGlow 2.5s infinite;
-        }
-        .float-card {
-            animation: floatEffect 4s ease-in-out infinite;
-        }
-        .radar-line {
-            transform-origin: center;
-            animation: radarScan 4s linear infinite;
-        }
-    </style>
+      }
+    }
+  </script>
+
+  <!-- Animated Dynamic Background & Motion Custom Styling -->
+  <style>
+    :root {
+      --color-brand-50: #f5f3ff;
+      --color-brand-100: #ede9fe;
+      --color-brand-500: #8b5cf6;
+      --color-brand-600: #7c3aed;
+      --color-brand-700: #6d28d9;
+      --color-accent-500: #ec4899;
+      --color-accent-600: #db2777;
+      --bg-gradient-1: #0f172a;
+      --bg-gradient-2: #3b0764;
+      --bg-gradient-3: #831843;
+      --radius-btn: 9999px;
+      --radius-card: 1.5rem;
+    }
+
+    [data-theme="soft-motion"] {
+      --bg-gradient-1: #0284c7;
+      --bg-gradient-2: #4f46e5;
+      --bg-gradient-3: #9333ea;
+    }
+
+    [data-theme="fire-passion"] {
+      --bg-gradient-1: #7f1d1d;
+      --bg-gradient-2: #831843;
+      --bg-gradient-3: #4c1d95;
+    }
+
+    body {
+      background: linear-gradient(-45deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3), #000000);
+      background-size: 400% 400%;
+      animation: gradientBg 12s ease infinite;
+      min-height: 100vh;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+
+    /* Live Animated Canvas Particles Layer */
+    #motion-bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .glass-panel-light {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .btn-motion {
+      border-radius: var(--radius-btn);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-motion::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: rotate(30deg);
+      animation: shimmer 3s infinite;
+    }
+
+    .card-motion {
+      border-radius: var(--radius-card);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .card-motion:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(236, 72, 153, 0.6);
+      box-shadow: 0 25px 50px -12px rgba(236, 72, 153, 0.35);
+    }
+
+    /* Live Animated Video / Gif Simulation Elements */
+    .video-frame-animation {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-frame-animation::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.85));
+      z-index: 10;
+    }
+
+    /* Pulse Radar Wave for Geo Location */
+    .radar-sweep {
+      position: relative;
+    }
+    .radar-sweep::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(16, 185, 129, 0.2);
+      border-radius: 50%;
+      animation: radarPulse 2s linear infinite;
+    }
+    @keyframes radarPulse {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
+<body class="font-sans antialiased flex flex-col min-h-screen selection:bg-accent-500 selection:text-white">
 
-    <!-- Header Section -->
-    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+  <!-- Interactive Motion Canvas Layer -->
+  <canvas id="motion-bg-canvas"></canvas>
+
+  <!-- Global Toast Notification Center -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- Fullscreen Animated Loader -->
+  <div id="global-loader" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-xl flex flex-col items-center justify-center transition-opacity duration-500">
+    <div class="relative flex items-center justify-center">
+      <div class="w-20 h-20 border-4 border-brand-500/20 border-t-accent-500 rounded-full animate-spin"></div>
+      <div class="w-12 h-12 border-4 border-accent-500/20 border-t-brand-500 rounded-full animate-spin-slow absolute"></div>
+      <i class="fa-solid fa-heart text-accent-500 absolute text-2xl animate-pulse"></i>
+    </div>
+    <p id="loader-status-text" class="mt-6 text-sm font-semibold text-slate-300 tracking-wider">গ্লোবাল জিপিএস ও সিস্টেম নেটওয়ার্ক ইনিশিয়ালাইজ হচ্ছে...</p>
+    <div class="mt-2 text-xs text-slate-500 font-mono" id="loader-subtext">Precision Geo-Targeting Active</div>
+  </div>
+
+  <!-- Age Verification Modal (Public User Gate) -->
+  <div id="age-modal" class="fixed inset-0 z-40 bg-slate-950/85 backdrop-blur-2xl flex items-center justify-center p-4 hidden">
+    <div class="glass-card card-motion max-w-md w-full p-6 sm:p-8 text-center shadow-2xl relative border border-white/20 animate-float">
+      <div class="w-20 h-20 bg-gradient-to-tr from-accent-500 to-brand-600 rounded-full flex items-center justify-center mx-auto mb-5 text-white text-3xl font-extrabold shadow-lg animate-pulse">
+        ১৮+
+      </div>
+      <h2 id="age-title" class="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-3">বয়স যাচাইকরণ আবশ্যক</h2>
+      <p id="age-desc" class="text-slate-300 text-sm mb-6 leading-relaxed">
+        এই প্ল্যাটফর্মে শুধুমাত্র প্রাপ্তবয়স্কদের জন্য প্রিমিয়াম ম্যাচমেকিং অফার প্রদর্শিত হয়। প্রবেশ করার জন্য আপনার বয়স ন্যূনতম ১৮ বছর বা তার বেশি হতে হবে।
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button id="age-btn-accept" class="btn-motion flex-1 py-3.5 px-6 bg-gradient-to-r from-accent-500 to-brand-600 hover:from-accent-600 hover:to-brand-700 text-white font-extrabold text-sm shadow-lg animate-pulse-glow transition">
+          আমার বয়স ১৮+ (প্রবেশ করুন)
+        </button>
+        <button id="age-btn-decline" class="py-3.5 px-6 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm rounded-full transition">
+          প্রস্থান করুন
+        </button>
+      </div>
+      <p class="text-[11px] text-slate-400 mt-5 flex items-center justify-center gap-1.5">
+        <i class="fa-solid fa-user-shield text-emerald-400"></i> ১০০% নিরাপদ ও গোপনীয় জিপিএস এনক্রিপশন
+      </p>
+    </div>
+  </div>
+
+  <!-- PUBLIC USER LANDING PAGE -->
+  <div id="app-public" class="relative z-10 flex-grow flex flex-col hidden">
+    
+    <!-- Top Dynamic Navigation -->
+    <header class="w-full py-4 px-4 sm:px-8 border-b border-white/10 glass-panel-light sticky top-0 z-30">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3">
+          <div class="relative flex items-center justify-center w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-accent-500 shadow-lg animate-pulse">
+            <i class="fa-solid fa-heart-pulse text-white text-xl"></i>
+          </div>
+          <span id="brand-header-title" class="font-heading font-black text-xl sm:text-2xl text-white tracking-tight">
+            Twilight<span class="text-accent-500">Live</span>
+          </span>
+        </a>
+
+        <!-- GPS Live Radar Pill -->
         <div class="flex items-center gap-3">
-            <div class="relative w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center pulse-live">
-                <i class="fa-solid fa-crosshairs text-xl text-white"></i>
-            </div>
-            <div>
-                <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-300">GeoPortal Pro</h1>
-                <p class="text-xs text-slate-400">Live Traffic & System Admin Core</p>
-            </div>
-        </div>
+          <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span id="live-users-counter">১,৪৮২ জন অনলাইনে সক্রিয়</span>
+          </div>
 
-        <div id="authStatus" class="flex items-center gap-4">
-            <!-- Dynamic Auth Buttons -->
-            <button onclick="toggleAdminModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-lg shadow-indigo-600/30">
-                <i class="fa-solid fa-shield-halved"></i>
-                <span id="adminBtnText">Admin Portal</span>
-            </button>
+          <div id="gps-status-pill" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-bold text-white shadow-inner">
+            <div class="radar-sweep w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+            <span id="geo-location-text">আপনার স্থান খোঁজা হচ্ছে...</span>
+          </div>
         </div>
+      </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="container mx-auto px-4 py-8 max-w-7xl space-y-8">
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:py-12 flex flex-col gap-12">
+      
+      <!-- HERO MOTION SECTION -->
+      <section class="text-center max-w-4xl mx-auto space-y-6 relative pt-4">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-500/15 border border-accent-500/40 text-accent-400 text-xs sm:text-sm font-bold shadow-lg animate-bounce">
+          <i class="fa-solid fa-location-crosshairs text-emerald-400 animate-spin-slow"></i>
+          <span id="hero-top-badge">সরাসরি আপনার নিখুঁত GPS লোকেশনে ম্যাচ পাওয়া গেছে</span>
+        </div>
 
-        <!-- Live GPS & Traffic Location Module -->
-        <section class="gif-motion-card rounded-2xl p-6 border border-slate-800 shadow-2xl relative overflow-hidden">
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="space-y-3 max-w-xl">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                        Real-Time Traffic GPS Active
-                    </div>
-                    <h2 class="text-3xl font-extrabold text-white">আপনার নিখুঁত লাইভ অবস্থান</h2>
-                    <p class="text-slate-300 text-sm">ডিভাইসের জিপিএস সেন্সরের মাধ্যমে আপনার বর্তমান ভৌগোলিক অবস্থান ও নিকটস্থ ট্রাফিক এরিয়া ট্র্যাক করা হচ্ছে।</p>
-                </div>
+        <h1 id="hero-headline-main" class="font-heading text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight tracking-tight">
+          আপনার আশেপাশের <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-500 via-pink-400 to-brand-500" id="hero-geo-highlight">[আপনার এলাকা]</span> সিঙ্গলদের সাথে যুক্ত হন
+        </h1>
 
-                <!-- Animated Radar Display -->
-                <div class="relative w-36 h-36 rounded-full border-2 border-blue-500/30 bg-slate-900/80 flex items-center justify-center float-card shadow-inner">
-                    <div class="absolute inset-0 rounded-full border border-blue-400/20 animate-ping"></div>
-                    <div class="w-28 h-28 rounded-full border border-slate-700 relative flex items-center justify-center">
-                        <div class="absolute w-full h-[1px] bg-blue-500/30"></div>
-                        <div class="absolute h-full w-[1px] bg-blue-500/30"></div>
-                        <div class="w-full h-full rounded-full radar-line bg-gradient-to-tr from-transparent via-transparent to-blue-500/40"></div>
-                        <i class="fa-solid fa-location-dot text-2xl text-blue-400 z-10 animate-bounce"></i>
-                    </div>
-                </div>
-            </div>
+        <p id="hero-subtext-main" class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+          আপনার বর্তমান লোকেশনের ৫ কিমি ব্যাসার্ধের মধ্যে যাচাইকৃত সিঙ্গেলদের প্রোফাইল দেখা যাচ্ছে। তাৎক্ষণিক চ্যাট ও প্রাইভেট চ্যাট রুম অ্যাক্সেস করুন।
+        </p>
 
-            <!-- GPS Details Table -->
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-slate-800/80 pt-6">
-                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-                    <span class="text-slate-400 text-xs font-medium block mb-1"><i class="fa-solid fa-map-pin text-blue-400 mr-1"></i> অক্ষাংশ ও দ্রাঘিমাংশ</span>
-                    <span id="geoCoords" class="text-slate-200 font-mono text-sm">স্থান নির্ধারণ করা হচ্ছে...</span>
-                </div>
-                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-                    <span class="text-slate-400 text-xs font-medium block mb-1"><i class="fa-solid fa-city text-indigo-400 mr-1"></i> নিকটস্থ এলাকা (Near Location)</span>
-                    <span id="geoCity" class="text-slate-200 font-semibold text-sm">ডাটা আপডেট হচ্ছে...</span>
-                </div>
-                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-                    <span class="text-slate-400 text-xs font-medium block mb-1"><i class="fa-solid fa-street-view text-emerald-400 mr-1"></i> সম্পূর্ণ সুনির্দিষ্ট ঠিকানা</span>
-                    <span id="geoAddress" class="text-slate-200 text-xs leading-relaxed">অপেক্ষা করুন...</span>
-                </div>
-            </div>
-        </section>
+        <!-- Main Dynamic Call To Action -->
+        <div class="pt-4 flex flex-col items-center justify-center gap-3">
+          <button id="main-hero-cta" class="cta-trigger btn-motion w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-accent-500 via-brand-600 to-accent-600 text-white font-extrabold text-lg sm:text-xl shadow-2xl hover:shadow-glow transition-all transform hover:-translate-y-1 animate-pulse-glow flex items-center justify-center gap-3">
+            <span id="main-cta-label">প্রোফাইলগুলি বিনামূল্যে ব্রাউজ করুন</span>
+            <i class="fa-solid fa-arrow-right-long text-xl"></i>
+          </button>
+          <span class="text-xs text-slate-400 font-medium flex items-center gap-1">
+            <i class="fa-solid fa-lock text-emerald-400"></i> কোনো পেমেন্ট বা সাবস্ক্রিপশনের প্রয়োজন নেই
+          </span>
+        </div>
 
-        <!-- Public Dynamic Services Section -->
-        <section class="space-y-4">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-xl font-bold text-slate-100">সক্রিয় সিস্টেম ফিচারসমূহ</h3>
-                    <p class="text-xs text-slate-400">লাইভ ডাটাবেজ থেকে ডাটা রিয়েলটাইমে লোড হচ্ছে</p>
-                </div>
-                <span id="featureCount" class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">0 Active Modules</span>
-            </div>
+        <!-- Live Motion Metrics Grid -->
+        <div class="pt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center border-t border-white/10 mt-8">
+          <div class="glass-panel-light p-4 rounded-2xl">
+            <div class="font-heading font-extrabold text-2xl text-emerald-400 animate-pulse" id="metric-1">৯৯.৮%</div>
+            <div class="text-xs text-slate-300 font-medium mt-1">জিপিএস সঠিকতা</div>
+          </div>
+          <div class="glass-panel-light p-4 rounded-2xl">
+            <div class="font-heading font-extrabold text-2xl text-accent-400" id="metric-2">৩২০+</div>
+            <div class="text-xs text-slate-300 font-medium mt-1">আশেপাশে সক্রিয় প্রোফাইল</div>
+          </div>
+          <div class="glass-panel-light p-4 rounded-2xl">
+            <div class="font-heading font-extrabold text-2xl text-brand-400" id="metric-3">১০০%</div>
+            <div class="text-xs text-slate-300 font-medium mt-1">গোপনীয়তা রক্ষা</div>
+          </div>
+          <div class="glass-panel-light p-4 rounded-2xl">
+            <div class="font-heading font-extrabold text-2xl text-amber-400" id="metric-4">&lt; ১ মিনিট</div>
+            <div class="text-xs text-slate-300 font-medium mt-1">কানেকশন টাইম</div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Features Container -->
-            <div id="publicFeaturesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Features rendered dynamically via Firebase -->
-                <div class="col-span-full py-12 text-center text-slate-500">
-                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-blue-500"></i>
-                    <p class="text-sm">Firebase Firestore থেকে ডাটা লোড হচ্ছে...</p>
-                </div>
-            </div>
-        </section>
+      <!-- DYNAMIC MOTION OFFER CARDS -->
+      <section class="space-y-6">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <h2 class="font-heading text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-fire text-accent-500 animate-bounce"></i> 
+            <span id="offers-section-title">আপনার লোকেশনের সেরা সুযোগসমূহ</span>
+          </h2>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30" id="offers-active-count">
+            অফার লোড হচ্ছে...
+          </span>
+        </div>
 
-        <!-- Admin Panel Section (Locked & Protected) -->
-        <section id="adminPanelSection" class="hidden space-y-6 bg-slate-900 border border-indigo-900/50 p-6 rounded-2xl shadow-2xl">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-4">
-                <div class="flex items-center gap-3">
-                    <div class="p-2 bg-indigo-600/20 text-indigo-400 rounded-lg border border-indigo-500/30">
-                        <i class="fa-solid fa-user-shield text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-white">Admin Control Panel (Authorized)</h3>
-                        <p class="text-xs text-emerald-400 flex items-center gap-1">
-                            <i class="fa-solid fa-circle-check"></i> UID Connected & Protected
-                        </p>
-                    </div>
-                </div>
-                <button onclick="logoutAdmin()" class="bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 text-xs px-3 py-2 rounded-lg transition">
-                    Logout Admin
-                </button>
-            </div>
+        <!-- Cards Layout -->
+        <div id="public-offers-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Dynamic Animated Offer Cards Will Inject Here -->
+        </div>
+      </section>
 
-            <!-- Add / Edit Feature Form -->
-            <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-4">
-                <h4 class="text-sm font-semibold text-slate-300" id="formTitle">নতুন সার্ভিস / ফিচার যোগ করুন</h4>
-                <form id="featureForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="hidden" id="editDocId" value="">
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">ফিচারের নাম</label>
-                        <input type="text" id="featureTitle" required placeholder="উদাহরণ: Realtime GPS Tracker" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">আইকন ক্লাস (FontAwesome)</label>
-                        <input type="text" id="featureIcon" required placeholder="fa-solid fa-satellite" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-xs text-slate-400 mb-1">বিস্তারিত বিবরণ</label>
-                        <textarea id="featureDesc" required rows="2" placeholder="সিস্টেম সার্ভিসের সম্পূর্ণ বিবরণ দিন..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500"></textarea>
-                    </div>
-                    <div class="md:col-span-2 flex justify-end gap-2">
-                        <button type="button" onclick="resetForm()" class="bg-slate-800 text-slate-300 px-4 py-2 rounded-lg text-xs hover:bg-slate-700 transition">বাতিল করুন</button>
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg text-xs font-medium transition shadow-lg shadow-indigo-600/30">সেভ করুন</button>
-                    </div>
-                </form>
-            </div>
+      <!-- ACCURATE GPS LOCATION DETAILS CARD -->
+      <section class="glass-card card-motion p-6 sm:p-8 rounded-3xl space-y-6 relative overflow-hidden border border-emerald-500/30">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-extrabold tracking-wide uppercase border border-emerald-500/30">
+              লাইভ GPS ট্র্যাকিং
+            </span>
+            <h3 class="font-heading text-xl font-bold text-white mt-2">আপনার সুনির্দিষ্ট অবস্থান তথ্য</h3>
+          </div>
+          <button id="refresh-gps-btn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl transition border border-white/10 flex items-center gap-2">
+            <i class="fa-solid fa-rotate text-emerald-400"></i> জিপিএস রিফ্রেশ করুন
+          </button>
+        </div>
 
-            <!-- Admin Live Data Table -->
-            <div class="overflow-x-auto border border-slate-800 rounded-xl">
-                <table class="w-full text-left text-sm text-slate-300">
-                    <thead class="bg-slate-950 text-xs text-slate-400 uppercase border-b border-slate-800">
-                        <tr>
-                            <th class="p-3">আইকন</th>
-                            <th class="p-3">ফিচারের নাম</th>
-                            <th class="p-3">বিবরণ</th>
-                            <th class="p-3 text-right">অ্যাকশন</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminDataTable" class="divide-y divide-slate-800">
-                        <!-- Dynamic Data -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+            <div class="text-xs text-slate-400 font-semibold">দেশ ও অঞ্চল</div>
+            <div class="text-base font-bold text-white" id="geo-card-country">বাংলাদেশ</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+            <div class="text-xs text-slate-400 font-semibold">শহর / বিভাগ</div>
+            <div class="text-base font-bold text-emerald-400" id="geo-card-city">ঢাকা</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+            <div class="text-xs text-slate-400 font-semibold">GPS কোঅর্ডিনেট (Lat, Long)</div>
+            <div class="text-xs font-mono font-bold text-accent-400 truncate" id="geo-card-coords">যাচাই করা হচ্ছে...</div>
+          </div>
+        </div>
+      </section>
 
     </main>
 
-    <!-- Admin Authentication Modal (Locked Protection Protocol) -->
-    <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl relative">
-            <button onclick="toggleAdminModal()" class="absolute right-4 top-4 text-slate-500 hover:text-slate-300 text-lg">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div class="text-center space-y-2 mb-6">
-                <div class="w-12 h-12 rounded-full bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center mx-auto text-xl">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white">অ্যাডমিন অ্যাক্সেস ভেরিফিকেশন</h3>
-                <p class="text-xs text-slate-400">Firebase Auth & UID Protected Panel</p>
-            </div>
-
-            <form id="adminLoginForm" class="space-y-4">
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1">অ্যাডমিন ইমেইল</label>
-                    <input type="email" id="adminEmail" required placeholder="admin@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1">পাসওয়ার্ড</label>
-                    <input type="password" id="adminPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1">Authorized Admin UID</label>
-                    <input type="text" id="adminUID" required placeholder="Firebase User UID" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 font-mono text-xs">
-                </div>
-                <div id="authError" class="text-xs text-red-400 hidden"></div>
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg text-sm transition shadow-lg shadow-indigo-600/30">
-                    লগইন ও পারমিশন ভেরিফাই করুন
-                </button>
-            </form>
+    <!-- FOOTER -->
+    <footer class="w-full border-t border-white/10 glass-panel-light py-8 px-4 mt-auto">
+      <div class="max-w-7xl mx-auto text-center space-y-4">
+        <div class="flex flex-wrap justify-center gap-6 text-xs font-semibold text-slate-400">
+          <a href="#" class="hover:text-accent-400 transition" id="footer-privacy">প্রাইভেসি পলিসি</a>
+          <a href="#" class="hover:text-accent-400 transition" id="footer-terms">ব্যবহারের শর্তাবলী</a>
+          <a href="#" class="hover:text-accent-400 transition" id="footer-cookies">কুকি পলিসি</a>
+          <a href="#" class="hover:text-accent-400 transition" id="footer-contact">হেল্প ও সাপোর্ট</a>
         </div>
+        <p class="text-xs text-slate-500 max-w-3xl mx-auto leading-relaxed" id="footer-disclaimer-text">
+          ১৮+ সতর্কবার্তা: এই ওয়েবসাইটে সমস্ত তথ্য ও চিত্রাবলী প্রাপ্তবয়স্ক সদস্যদের জন্য তৈরি। এটি একটি ডাইনামিক লাইভ ম্যাচমেকিং ট্র্যাকিং হাব।
+        </p>
+        <p class="text-xs text-slate-500 font-bold" id="footer-copy-text">
+          &copy; 2026 TwilightLive Match System. সর্বস্বত্ব সংরক্ষিত।
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ADMIN PANEL SYSTEM (#admin) -->
+  <div id="app-admin" class="relative z-20 flex-grow flex flex-col hidden bg-slate-950 text-slate-100 min-h-screen">
+    
+    <!-- ADMIN AUTHENTICATION FORM -->
+    <div id="admin-auth-view" class="flex-grow flex items-center justify-center p-4">
+      <div class="glass-card card-motion p-8 max-w-md w-full shadow-2xl space-y-6 border border-white/20">
+        <div class="text-center space-y-2">
+          <div class="w-16 h-16 bg-gradient-to-tr from-brand-600 to-accent-500 rounded-2xl flex items-center justify-center mx-auto text-white text-2xl font-black shadow-lg animate-pulse">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h2 class="font-heading text-2xl font-black text-white">অ্যাডমিন সিকিউরিটি প্রোটোকল</h2>
+          <p class="text-xs text-slate-400">Firebase Auth + Admin UID Verified Access</p>
+        </div>
+
+        <form id="admin-login-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">অ্যাডমিন ইমেইল</label>
+            <input type="email" id="admin-input-email" required class="w-full px-4 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-accent-500" placeholder="admin@domain.com">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">পাসওয়ার্ড</label>
+            <input type="password" id="admin-input-password" required class="w-full px-4 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-accent-500" placeholder="••••••••••••">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">অ্যাডমিন UID পারমিশন কি (ঐচ্ছিক)</label>
+            <input type="text" id="admin-input-uid" class="w-full px-4 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-sm font-mono text-emerald-400 focus:outline-none focus:border-accent-500" placeholder="UID Verification Token">
+          </div>
+          <button type="submit" id="admin-login-submit" class="w-full py-3.5 bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 text-white font-extrabold text-sm rounded-xl shadow-lg transition">
+            অ্যাডমিন প্যানেলে সাইন ইন করুন
+          </button>
+        </form>
+      </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
-        <p>&copy; 2026 GeoPortal Pro System. All Rights Reserved. Fully Functional Live Architecture.</p>
-    </footer>
+    <!-- AUTHENTICATED ADMIN DASHBOARD -->
+    <div id="admin-dashboard-view" class="flex-grow flex flex-col md:flex-row hidden">
+      
+      <!-- Admin Sidebar Navigation -->
+      <aside class="w-full md:w-72 bg-slate-900/90 border-r border-white/10 p-5 flex flex-col justify-between space-y-6">
+        <div class="space-y-6">
+          <div class="flex items-center gap-3 pb-4 border-b border-white/10">
+            <div class="w-10 h-10 rounded-xl bg-accent-500 flex items-center justify-center text-white font-black text-lg">
+              <i class="fa-solid fa-sliders"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm text-white">অ্যাডমিন মাস্টার প্যানেল</h3>
+              <span class="text-[10px] text-emerald-400 font-mono">● UID Verified Active</span>
+            </div>
+          </div>
 
-    <!-- Firebase SDK Integration (v10 Modular) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+          <nav class="space-y-1.5">
+            <button data-tab="tab-overview" class="admin-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold bg-brand-600 text-white transition">
+              <i class="fa-solid fa-chart-line text-lg w-5"></i> এনালাইটিক্স ওভারভিউ
+            </button>
+            <button data-tab="tab-offers" class="admin-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i class="fa-solid fa-layer-group text-lg w-5"></i> অফার ম্যানেজমেন্ট (CRUD)
+            </button>
+            <button data-tab="tab-customizer" class="admin-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i class="fa-solid fa-wand-magic-sparkles text-lg w-5"></i> ল্যান্ডিং পেজ কাস্টমাইজেশন
+            </button>
+            <button data-tab="tab-gps" class="admin-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i class="fa-solid fa-location-dot text-lg w-5"></i> জিপিএস ও ট্র্যাকিং সেটিংস
+            </button>
+            <button data-tab="tab-firebase" class="admin-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i class="fa-solid fa-database text-lg w-5"></i> ফায়ারবেস কনফিগারেশন
+            </button>
+          </nav>
+        </div>
 
-        // ==========================================
-        // 1. FIREBASE CONFIGURATION
-        // (Replace with your actual Firebase project credentials)
-        // ==========================================
-        const firebaseConfig = {
-  apiKey: "AIzaSyDVhHK08A9XYg-RaWozGSorHv0e2pgDzG4",
-  authDomain: "arina-468c4.firebaseapp.com",
-  databaseURL: "https://arina-468c4-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "arina-468c4",
-  storageBucket: "arina-468c4.firebasestorage.app",
-  messagingSenderId: "881029049599",
-  appId: "1:881029049599:web:a641051e14586202d130ca"
-};
+        <div class="pt-4 border-t border-white/10 space-y-3">
+          <div class="px-3 py-2 bg-slate-950 rounded-xl border border-white/10 text-xs">
+            <div class="text-[10px] text-slate-500 font-bold uppercase">লগইনকৃত অ্যাডমিন</div>
+            <div id="admin-active-email" class="font-mono text-emerald-400 truncate">admin@system.local</div>
+          </div>
+          <button id="admin-logout-btn" class="w-full py-2.5 bg-red-500/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-power-off"></i> সাইন আউট
+          </button>
+        </div>
+      </aside>
 
-        // Initialize Firebase Services
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const rtdb = getDatabase(app);
+      <!-- Main Admin Body -->
+      <main class="flex-grow p-4 sm:p-8 overflow-y-auto max-w-7xl">
+        
+        <!-- Top Toolbar -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900/80 p-5 rounded-2xl border border-white/10 mb-8">
+          <div>
+            <h1 id="admin-current-tab-title" class="font-heading text-2xl font-black text-white">এনালাইটিক্স ওভারভিউ</h1>
+            <p class="text-xs text-slate-400">লাইভ ট্রাফিকের ক্লিকে ট্র্যাকিং ও কনভার্সন সিস্টেম</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <a href="#" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl transition border border-white/10 flex items-center gap-2">
+              <i class="fa-solid fa-up-right-from-square"></i> লাইভ সাইট দেখুন
+            </a>
+            <button id="admin-save-all-btn" class="px-5 py-2 bg-gradient-to-r from-accent-500 to-brand-600 hover:from-accent-600 hover:to-brand-700 text-white text-xs font-extrabold rounded-xl shadow-lg transition flex items-center gap-2">
+              <i class="fa-solid fa-floppy-disk"></i> পরিবর্তন সেভ করুন
+            </button>
+          </div>
+        </div>
 
-        // State Management
-        let currentUser = null;
+        <!-- TAB 1: OVERVIEW -->
+        <div id="tab-overview" class="admin-tab-pane space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-slate-900 p-5 rounded-2xl border border-white/10">
+              <div class="text-xs text-slate-400 font-bold uppercase">মোট পেজ ভিউ</div>
+              <div class="text-3xl font-black text-white mt-2" id="adm-stat-views">0</div>
+            </div>
+            <div class="bg-slate-900 p-5 rounded-2xl border border-white/10">
+              <div class="text-xs text-slate-400 font-bold uppercase">মোট অফার ক্লিক</div>
+              <div class="text-3xl font-black text-accent-400 mt-2" id="adm-stat-clicks">0</div>
+            </div>
+            <div class="bg-slate-900 p-5 rounded-2xl border border-white/10">
+              <div class="text-xs text-slate-400 font-bold uppercase">কনভার্সন রেট (CTR)</div>
+              <div class="text-3xl font-black text-emerald-400 mt-2" id="adm-stat-ctr">0%</div>
+            </div>
+            <div class="bg-slate-900 p-5 rounded-2xl border border-white/10">
+              <div class="text-xs text-slate-400 font-bold uppercase">সক্রিয় অফার</div>
+              <div class="text-3xl font-black text-brand-400 mt-2" id="adm-stat-offers">0</div>
+            </div>
+          </div>
 
-        // ==========================================
-        // 2. ACCURATE GPS & NEAR LOCATION ENGINE
-        // ==========================================
-        function initLocationTracking() {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.watchPosition(
-                    async (position) => {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        
-                        document.getElementById("geoCoords").innerText = `${lat.toFixed(5)}° N, ${lon.toFixed(5)}° E`;
+          <div class="bg-slate-900 rounded-2xl border border-white/10 overflow-hidden">
+            <div class="p-4 border-b border-white/10 flex items-center justify-between">
+              <h3 class="font-bold text-sm text-white">সাম্প্রতিক ক্লিক ট্র্যাকিং লগ (লাইভ)</h3>
+              <button id="clear-logs-btn" class="text-xs text-red-400 hover:text-red-300">লগ ক্লিয়ার করুন</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-slate-300">
+                <thead class="bg-slate-950 text-slate-400 uppercase font-bold">
+                  <tr>
+                    <th class="p-3">সময়</th>
+                    <th class="p-3">অফার</th>
+                    <th class="p-3">জিপিএস স্থান</th>
+                    <th class="p-3">SubID / ClickID</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-logs-tbody" class="divide-y divide-white/5">
+                  <!-- Log Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
-                        // Realtime Database-এ ইউজারের লাইভ জিপিএস লোকেশন আপডেট
-                        try {
-                            const userLocRef = ref(rtdb, 'traffic_locations/user_live');
-                            set(userLocRef, {
-                                latitude: lat,
-                                longitude: lon,
-                                timestamp: new Date().toISOString()
-                            });
-                        } catch(e) {
-                            console.log("Realtime DB update note:", e);
-                        }
+        <!-- TAB 2: OFFERS CRUD -->
+        <div id="tab-offers" class="admin-tab-pane space-y-6 hidden">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-lg text-white">অফার ম্যানেজমেন্ট</h3>
+            <button id="admin-add-offer-btn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-2">
+              <i class="fa-solid fa-plus"></i> নতুন অফার যোগ করুন
+            </button>
+          </div>
+          <div id="admin-offers-container" class="space-y-4">
+            <!-- Dynamic Admin Offers -->
+          </div>
+        </div>
 
-                        // Reverse Geocoding via OpenStreetMap API (Accurate Near Location)
-                        try {
-                            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-                            const data = await res.json();
-                            
-                            if (data && data.address) {
-                                const city = data.address.city || data.address.town || data.address.village || data.address.suburb || "নিকটস্থ এলাকা পাওয়া গেছে";
-                                const fullAddr = data.display_name || "বিস্তারিত এলাকা ডাটাবেজে রেকর্ড করা হয়েছে";
+        <!-- TAB 3: CUSTOMIZER -->
+        <div id="tab-customizer" class="admin-tab-pane space-y-6 hidden bg-slate-900 p-6 rounded-2xl border border-white/10">
+          <h3 class="font-bold text-lg text-white border-b border-white/10 pb-3">ডিজাইন ও মোশন থিম</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">ভিজ্যুয়াল কালার থিম</label>
+              <select id="setting-theme" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-sm text-white">
+                <option value="default-twilight">Twilight Dark Cyber (বেগুনি / গোলাপী)</option>
+                <option value="soft-motion">Soft Motion Ocean (নীল / বেগুনী)</option>
+                <option value="fire-passion">Fire Passion Crimson (লাল / গোলাপী)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">ব্র্যান্ড নাম</label>
+              <input type="text" id="setting-brand" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-sm text-white">
+            </div>
+          </div>
 
-                                document.getElementById("geoCity").innerText = city;
-                                document.getElementById("geoAddress").innerText = fullAddr;
-                            }
-                        } catch (err) {
-                            document.getElementById("geoCity").innerText = "Network Location Active";
-                            document.getElementById("geoAddress").innerText = "বিস্তারিত লোকেশন সংগৃহীত হচ্ছে...";
-                        }
-                    },
-                    (error) => {
-                        document.getElementById("geoCoords").innerText = "GPS Permission Denied";
-                        document.getElementById("geoCity").innerText = "লোকেশন পারমিশন প্রয়োজন";
-                        document.getElementById("geoAddress").innerText = "অনুগ্যহ করে ব্রাউজারের লোকেশন পারমিশন এলাউ (Allow) করুন।";
-                    },
-                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-                );
-            } else {
-                document.getElementById("geoCoords").innerText = "Not Supported";
-            }
+          <h3 class="font-bold text-lg text-white border-b border-white/10 pb-3 pt-4">হেডলাইন ও কন্টেট</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">টপ ব্যাজ টেক্সট</label>
+              <input type="text" id="setting-badge" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">প্রধান হেডলাইন</label>
+              <input type="text" id="setting-headline" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">সাব-টেক্সট বিবরণ</label>
+              <textarea id="setting-subtext" rows="3" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-sm text-white"></textarea>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">প্রধান CTA বাটন লেবেল</label>
+              <input type="text" id="setting-cta" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-sm text-white">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: GPS SETTINGS -->
+        <div id="tab-gps" class="admin-tab-pane space-y-6 hidden bg-slate-900 p-6 rounded-2xl border border-white/10">
+          <h3 class="font-bold text-lg text-white border-b border-white/10 pb-3">GPS ও ফলব্যাক লোকেশন কনফিগারেশন</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">ডিফল্ট শহর (GPS না থাকলে)</label>
+              <input type="text" id="setting-default-city" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-sm text-white" value="ঢাকা">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">ডিফল্ট দেশ</label>
+              <input type="text" id="setting-default-country" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-sm text-white" value="বাংলাদেশ">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: FIREBASE STATUS -->
+        <div id="tab-firebase" class="admin-tab-pane space-y-6 hidden bg-slate-900 p-6 rounded-2xl border border-white/10">
+          <h3 class="font-bold text-lg text-white border-b border-white/10 pb-3">ফায়ারবেস ডাটাবেজ স্থিতি</h3>
+          <div class="space-y-3">
+            <div class="p-4 bg-slate-950 rounded-xl border border-white/10 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold text-white">Realtime Database / Firestore</div>
+                <div class="text-xs text-slate-400" id="fb-status-text">ফায়ারবেস কানেকশন পরীক্ষা করা হচ্ছে...</div>
+              </div>
+              <span id="fb-status-pill" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400">তৈরি হচ্ছে</span>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">কনফিগারেশন ব্যাকআপ JSON</label>
+              <textarea id="fb-json-export" readonly rows="8" class="w-full p-3 bg-slate-950 font-mono text-xs text-emerald-400 border border-slate-700 rounded-xl"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- OFFER EDIT/ADD MODAL -->
+  <div id="offer-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="glass-card card-motion max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3">
+        <h3 id="offer-modal-title" class="font-bold text-lg text-white">নতুন অফার যুক্ত করুন</h3>
+        <button id="close-offer-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+
+      <form id="offer-modal-form" class="space-y-3">
+        <input type="hidden" id="offer-edit-id">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">অফার শিরোনাম</label>
+          <input type="text" id="off-input-title" required class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">বিবরণ</label>
+          <textarea id="off-input-desc" required rows="2" class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">CPA অফার লিঙ্ক (URL)</label>
+          <input type="url" id="off-input-url" required class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">বাটন টেক্সট</label>
+            <input type="text" id="off-input-cta" required class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">ব্যাজ ট্যাগ</label>
+            <input type="text" id="off-input-badge" class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">রেটিং (১.০ - ৫.০)</label>
+            <input type="number" step="0.1" id="off-input-rating" value="4.9" class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">GIF / ভিডিও কভার মিডিয়া URL</label>
+            <input type="text" id="off-input-media" class="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white">
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="off-input-active" checked class="w-4 h-4 text-accent-500 rounded">
+          <label for="off-input-active" class="text-xs font-bold text-slate-300">পাবলিক ল্যান্ডিং পেজে সক্রিয় রাখুন</label>
+        </div>
+        <button type="submit" class="w-full py-3 bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 text-white font-bold text-xs rounded-xl transition mt-4">
+          অফার সেভ করুন
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- APPLICATION ENGINE JAVASCRIPT MODULE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    /* ==========================================================================
+       1. GLOBAL SYSTEM STATE MODEL
+       ========================================================================== */
+    const APP_CONFIG = {
+      firebase: {
+        apiKey: "",
+        authDomain: "",
+        databaseURL: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: "",
+        appId: ""
+      },
+      settings: {
+        theme: "default-twilight",
+        brandName: "TwilightLive",
+        heroBadge: "সরাসরি আপনার নিখুঁত GPS লোকেশনে ম্যাচ পাওয়া গেছে",
+        heroHeadline: "আপনার আশেপাশের সিঙ্গলদের সাথে যুক্ত হন",
+        heroSubtext: "আপনার বর্তমান লোকেশনের ৫ কিমি ব্যাসার্ধের মধ্যে যাচাইকৃত সিঙ্গেলদের প্রোফাইল দেখা যাচ্ছে। তাৎক্ষণিক চ্যাট ও প্রাইভেট চ্যাট রুম অ্যাক্সেস করুন।",
+        heroCta: "প্রোফাইলগুলি বিনামূল্যে ব্রাউজ করুন",
+        defaultCity: "ঢাকা",
+        defaultCountry: "বাংলাদেশ"
+      },
+      offers: [
+        {
+          id: "off_real_1",
+          title: "ঢাকা ভেরিফাইড প্রিমিয়াম প্রাইভেট ম্যাচমেকিং",
+          description: "আপনার নিকটবর্তী এলাকার যাচাইকৃত সক্রিয় সিঙ্গেলদের সাথে সরাসরি চ্যাট রুমে যুক্ত হন।",
+          url: "https://example.com/cpa-smartlink-1",
+          ctaText: "তাৎক্ষণিক প্রবেশ করুন",
+          badge: "GPS VERIFIED",
+          rating: "4.9",
+          mediaUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+          active: true
+        },
+        {
+          id: "off_real_2",
+          title: "প্রাইভেট নাইট ক্যানভাস ডেটিং নেটওয়ার্ক",
+          description: "নিরাপদ, সম্পূর্ণ এনক্রিপ্টেড ও গোপনীয়তায় সুরক্ষিত প্রাইভেট কমিউনিটি।",
+          url: "https://example.com/cpa-smartlink-2",
+          ctaText: "চ্যাট রুম ব্রাউজ করুন",
+          badge: "HIGH ACTIVITY",
+          rating: "4.8",
+          mediaUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+          active: true
         }
+      ]
+    };
 
-        // ==========================================
-        // 3. FIRESTORE REAL-TIME DATA SYNC (Public & Admin)
-        // ==========================================
-        function syncFeaturesData() {
-            const featuresRef = collection(db, "system_features");
+    let localState = JSON.parse(JSON.stringify(APP_CONFIG));
+    let firebaseApp = null, firebaseAuth = null, firebaseDb = null, firebaseStore = null;
+    let isFirebaseConnected = false;
+    let inboundParams = {};
+    let currentGeoData = { city: "ঢাকা", country: "বাংলাদেশ", lat: null, lon: null };
 
-            onSnapshot(featuresRef, (snapshot) => {
-                const publicGrid = document.getElementById("publicFeaturesGrid");
-                const adminTable = document.getElementById("adminDataTable");
-                const featureCount = document.getElementById("featureCount");
+    /* ==========================================================================
+       2. VISUAL MOTION CANVAS ENGINE (Background Particles & Dynamic Animation)
+       ========================================================================== */
+    function initMotionCanvas() {
+      const canvas = document.getElementById('motion-bg-canvas');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
 
-                if (snapshot.empty) {
-                    publicGrid.innerHTML = `<div class="col-span-full py-10 text-center text-slate-500">কোন সক্রিয় সিস্টেম ফিচার পাওয়া যায়নি। অ্যাডমিন প্যানেল থেকে যোগ করুন।</div>`;
-                    adminTable.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">ডাটা খালি।</td></tr>`;
-                    featureCount.innerText = "0 Active Modules";
-                    return;
-                }
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
 
-                featureCount.innerText = `${snapshot.size} Active Modules`;
-                publicGrid.innerHTML = "";
-                adminTable.innerHTML = "";
+      const particles = Array.from({ length: 45 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 3 + 1,
+        color: Math.random() > 0.5 ? 'rgba(236, 72, 153, ' : 'rgba(124, 58, 237, ',
+        alpha: Math.random() * 0.6 + 0.2,
+        speedX: (Math.random() - 0.5) * 0.8,
+        speedY: (Math.random() - 0.5) * 0.8
+      }));
 
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    const docId = docSnap.id;
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+          p.x += p.speedX;
+          p.y += p.speedY;
 
-                    // Render Public Animated Cards
-                    const card = document.createElement("div");
-                    card.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition duration-300 float-card relative group";
-                    card.innerHTML = `
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 rounded-xl group-hover:scale-110 transition">
-                                <i class="${data.icon || 'fa-solid fa-cube'} text-xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-slate-100 text-base mb-1">${data.title}</h4>
-                                <p class="text-xs text-slate-400 leading-relaxed">${data.description}</p>
-                            </div>
-                        </div>
-                    `;
-                    publicGrid.appendChild(card);
+          if(p.x < 0 || p.x > width) p.speedX *= -1;
+          if(p.y < 0 || p.y > height) p.speedY *= -1;
 
-                    // Render Admin Table Rows
-                    const row = document.createElement("tr");
-                    row.className = "hover:bg-slate-900/50";
-                    row.innerHTML = `
-                        <td class="p-3"><i class="${data.icon} text-indigo-400 text-base"></i></td>
-                        <td class="p-3 font-medium text-slate-200">${data.title}</td>
-                        <td class="p-3 text-xs text-slate-400 max-w-xs truncate">${data.description}</td>
-                        <td class="p-3 text-right space-x-2">
-                            <button onclick="editFeature('${docId}', '${escapeHtml(data.title)}', '${escapeHtml(data.icon)}', '${escapeHtml(data.description)}')" class="text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded border border-indigo-500/20 bg-indigo-500/10 text-xs">
-                                Edit
-                            </button>
-                            <button onclick="deleteFeature('${docId}')" class="text-red-400 hover:text-red-300 px-2 py-1 rounded border border-red-500/20 bg-red-500/10 text-xs">
-                                Delete
-                            </button>
-                        </td>
-                    `;
-                    adminTable.appendChild(row);
-                });
-            });
-        }
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + p.alpha + ')';
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = '#ec4899';
+          ctx.fill();
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
 
-        // ==========================================
-        // 4. ADMIN LOCKED PROTECTION PROTOCOL (AUTH)
-        // ==========================================
-        const loginForm = document.getElementById("adminLoginForm");
-        loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const email = document.getElementById("adminEmail").value;
-            const password = document.getElementById("adminPassword").value;
-            const inputUID = document.getElementById("adminUID").value.trim();
-            const authError = document.getElementById("authError");
+    /* ==========================================================================
+       3. PRECISE GPS LOCATION ENGINE
+       ========================================================================== */
+    function initGPSLocation() {
+      const geoPill = document.getElementById('geo-location-text');
+      const geoCardCity = document.getElementById('geo-card-city');
+      const geoCardCountry = document.getElementById('geo-card-country');
+      const geoCardCoords = document.getElementById('geo-card-coords');
+      const heroGeoHighlight = document.getElementById('hero-geo-highlight');
 
-            authError.classList.add("hidden");
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          async (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            currentGeoData.lat = lat.toFixed(4);
+            currentGeoData.lon = lon.toFixed(4);
 
             try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-
-                // Locked UID Verification Check
-                if (user.uid === inputUID) {
-                    toggleAdminModal();
-                    alert("Admin Locked Permission Verified Successfully!");
-                } else {
-                    await signOut(auth);
-                    authError.innerText = "ত্রুটি: প্রদানকৃত Admin UID ভ্যালিড নয়!";
-                    authError.classList.remove("hidden");
-                }
-            } catch (error) {
-                authError.innerText = "লগইন ব্যর্থ: " + error.message;
-                authError.classList.remove("hidden");
-            }
-        });
-
-        // Track Auth State & Protect Admin Panel
-        onAuthStateChanged(auth, (user) => {
-            const adminSection = document.getElementById("adminPanelSection");
-            const adminBtnText = document.getElementById("adminBtnText");
-
-            if (user) {
-                currentUser = user;
-                adminSection.classList.remove("hidden");
-                adminBtnText.innerText = "Dashboard Active";
-            } else {
-                currentUser = null;
-                adminSection.classList.add("hidden");
-                adminBtnText.innerText = "Admin Portal";
-            }
-        });
-
-        // Logout Functionality
-        window.logoutAdmin = () => {
-            signOut(auth).then(() => {
-                alert("অ্যাডমিন প্যানেল থেকে সফলভাবে লগআউট করা হয়েছে।");
-            });
-        };
-
-        // ==========================================
-        // 5. ADMIN EDIT/CUSTOMIZE/DELETE FEATURES
-        // ==========================================
-        const featureForm = document.getElementById("featureForm");
-        featureForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            if (!currentUser) return alert("অনুমতি নেই!");
-
-            const docId = document.getElementById("editDocId").value;
-            const title = document.getElementById("featureTitle").value;
-            const icon = document.getElementById("featureIcon").value;
-            const description = document.getElementById("featureDesc").value;
-
-            try {
-                if (docId) {
-                    // Update existing feature
-                    await updateDoc(doc(db, "system_features", docId), {
-                        title, icon, description,
-                        updatedAt: new Date().toISOString()
-                    });
-                } else {
-                    // Add new feature
-                    await addDoc(collection(db, "system_features"), {
-                        title, icon, description,
-                        createdAt: new Date().toISOString()
-                    });
-                }
-                resetForm();
+              // High precision reverse geocoding via OpenStreetMap API
+              const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=bn`);
+              const data = await res.json();
+              if (data && data.address) {
+                const city = data.address.city || data.address.town || data.address.state_district || data.address.state || localState.settings.defaultCity;
+                const country = data.address.country || localState.settings.defaultCountry;
+                
+                currentGeoData.city = city;
+                currentGeoData.country = country;
+              }
             } catch (err) {
-                alert("ডাটা সেভ করতে সমস্যা হয়েছে: " + err.message);
+              console.warn("Reverse Geocoding Error:", err);
             }
+            updateGeoUI();
+          },
+          (err) => {
+            console.warn("GPS Permission Denied / Error:", err.message);
+            fallbackIPLocation();
+          },
+          { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+        );
+      } else {
+        fallbackIPLocation();
+      }
+
+      async function fallbackIPLocation() {
+        try {
+          const res = await fetch('https://ipapi.co/json/');
+          const data = await res.json();
+          if (data && data.city) {
+            currentGeoData.city = data.city;
+            currentGeoData.country = data.country_name || localState.settings.defaultCountry;
+            currentGeoData.lat = data.latitude;
+            currentGeoData.lon = data.longitude;
+          }
+        } catch(e) {
+          console.warn("IP Geo Fallback failed.");
+        }
+        updateGeoUI();
+      }
+
+      function updateGeoUI() {
+        if(geoPill) geoPill.textContent = `${currentGeoData.city}, ${currentGeoData.country}`;
+        if(geoCardCity) geoCardCity.textContent = currentGeoData.city;
+        if(geoCardCountry) geoCardCountry.textContent = currentGeoData.country;
+        if(geoCardCoords) geoCardCoords.textContent = currentGeoData.lat ? `${currentGeoData.lat}, ${currentGeoData.lon}` : 'GPS ডিভাইস এভেইলেবল';
+        if(heroGeoHighlight) heroGeoHighlight.textContent = `${currentGeoData.city} এর`;
+        
+        // Re-render offers to reflect city name
+        renderPublicOffers();
+      }
+    }
+
+    /* ==========================================================================
+       4. FIREBASE INITIALIZATION ENGINE
+       ========================================================================== */
+    function initFirebaseSystem() {
+      const cfg = localState.firebase;
+      if (cfg && cfg.apiKey && cfg.apiKey !== "") {
+        try {
+          firebaseApp = initializeApp(cfg);
+          firebaseAuth = getAuth(firebaseApp);
+          firebaseDb = getDatabase(firebaseApp);
+          firebaseStore = getFirestore(firebaseApp);
+          isFirebaseConnected = true;
+          
+          setupFirebaseRealtimeSync();
+          updateFirebaseDiagnostics("Firebase Database & Auth Connected", "CONNECTED", "bg-emerald-500/20 text-emerald-400");
+        } catch (e) {
+          console.warn("Firebase Setup Error:", e);
+          updateFirebaseDiagnostics("Local Fallback Configuration Active", "LOCAL MODE", "bg-amber-500/20 text-amber-400");
+        }
+      } else {
+        updateFirebaseDiagnostics("Firebase API Keys Empty (Local Mode Active)", "UNCONFIGURED", "bg-amber-500/20 text-amber-400");
+      }
+    }
+
+    function setupFirebaseRealtimeSync() {
+      if(!isFirebaseConnected) return;
+
+      // Sync Realtime DB Settings
+      onValue(ref(firebaseDb, 'app/settings'), (snap) => {
+        if(snap.exists()) {
+          localState.settings = { ...localState.settings, ...snap.val() };
+          applyThemeAndSettings();
+        }
+      });
+
+      // Sync Offers
+      onValue(ref(firebaseDb, 'app/offers'), (snap) => {
+        if(snap.exists()) {
+          const val = snap.val();
+          localState.offers = Array.isArray(val) ? val : Object.values(val);
+        }
+        renderPublicOffers();
+        renderAdminOffers();
+      });
+
+      // Auth state tracking
+      onAuthStateChanged(firebaseAuth, (user) => {
+        const emailSpan = document.getElementById('admin-active-email');
+        if(user) {
+          if(emailSpan) emailSpan.textContent = user.email;
+          showAdminDashboard();
+        } else {
+          showAdminLogin();
+        }
+      });
+    }
+
+    function updateFirebaseDiagnostics(text, badge, pillClass) {
+      const statusText = document.getElementById('fb-status-text');
+      const statusPill = document.getElementById('fb-status-pill');
+      const exportArea = document.getElementById('fb-json-export');
+
+      if(statusText) statusText.textContent = text;
+      if(statusPill) {
+        statusPill.textContent = badge;
+        statusPill.className = `px-3 py-1 rounded-full text-xs font-bold ${pillClass}`;
+      }
+      if(exportArea) exportArea.value = JSON.stringify(localState, null, 2);
+    }
+
+    /* ==========================================================================
+       5. PUBLIC LANDING PAGE CONTROLLER
+       ========================================================================== */
+    function applyThemeAndSettings() {
+      const s = localState.settings;
+      document.documentElement.setAttribute('data-theme', s.theme || 'default-twilight');
+
+      document.getElementById('brand-header-title').innerHTML = `${escapeHTML(s.brandName)}<span class="text-accent-500">.</span>`;
+      document.getElementById('hero-top-badge').textContent = s.heroBadge;
+      document.getElementById('hero-headline-main').childNodes[0].textContent = s.heroHeadline + " ";
+      document.getElementById('hero-subtext-main').textContent = s.heroSubtext;
+      document.getElementById('main-cta-label').textContent = s.heroCta;
+    }
+
+    function renderPublicOffers() {
+      const grid = document.getElementById('public-offers-grid');
+      const activeOffers = (localState.offers || []).filter(o => o.active);
+      
+      document.getElementById('offers-active-count').textContent = `${activeOffers.length} টি সচল অফার রয়েছে`;
+
+      if(activeOffers.length === 0) {
+        grid.innerHTML = `<div class="col-span-full p-8 text-center glass-card rounded-2xl text-slate-400">বর্তমানে কোনো অফার এভেইলবেলে নেই।</div>`;
+        return;
+      }
+
+      grid.innerHTML = activeOffers.map(off => `
+        <div class="glass-card card-motion p-5 flex flex-col justify-between space-y-4 relative border border-white/10">
+          <div class="space-y-3">
+            <div class="video-frame-animation h-52 w-full rounded-2xl overflow-hidden bg-slate-900 relative">
+              <img src="${escapeHTML(off.mediaUrl)}" alt="${escapeHTML(off.title)}" class="w-full h-full object-cover transform hover:scale-110 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-3 left-3 z-20 bg-slate-950/80 backdrop-blur-md border border-white/20 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                ${escapeHTML(off.badge || 'PROMO')}
+              </span>
+              <span class="absolute bottom-3 right-3 z-20 bg-amber-400 text-slate-950 text-xs font-black px-2.5 py-0.5 rounded-md flex items-center gap-1 shadow-lg">
+                <i class="fa-solid fa-star text-[10px]"></i> ${escapeHTML(off.rating || '4.9')}
+              </span>
+            </div>
+
+            <div>
+              <h3 class="font-heading font-extrabold text-white text-lg sm:text-xl leading-snug">${escapeHTML(off.title)}</h3>
+              <p class="text-slate-300 text-xs mt-1.5 leading-relaxed">${escapeHTML(off.description)}</p>
+            </div>
+
+            <div class="flex items-center gap-2 text-xs font-bold text-emerald-400">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>${escapeHTML(currentGeoData.city)} কভারেজ এলাকা সক্রিয়</span>
+            </div>
+          </div>
+
+          <button data-url="${escapeHTML(off.url)}" data-title="${escapeHTML(off.title)}" class="cta-trigger btn-motion w-full py-3.5 bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 text-white font-extrabold text-sm shadow-lg transition flex items-center justify-center gap-2">
+            <span>${escapeHTML(off.ctaText || 'প্রবেশ করুন')}</span>
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+          </button>
+        </div>
+      `).join('');
+
+      // Attach CTA Listeners
+      document.querySelectorAll('.cta-trigger').forEach(b => {
+        b.addEventListener('click', handleCTARedirection);
+      });
+    }
+
+    /* CPA Target Redirect Engine with Parameter Forwarding */
+    function handleCTARedirection(e) {
+      e.preventDefault();
+      const btn = e.currentTarget;
+      let targetUrl = btn.getAttribute('data-url');
+      const title = btn.getAttribute('data-title') || 'Hero Main CTA';
+
+      if(!targetUrl) {
+        const active = localState.offers.filter(o => o.active);
+        targetUrl = active.length > 0 ? active[0].url : "https://example.com";
+      }
+
+      // Append query parameters Safely
+      let finalRedirectUrl = targetUrl;
+      try {
+        const parsed = new URL(targetUrl);
+        Object.keys(inboundParams).forEach(p => {
+          parsed.searchParams.set(p, inboundParams[p]);
         });
+        finalRedirectUrl = parsed.toString();
+      } catch(err) {
+        console.warn("URL Parse Fail:", err);
+      }
 
-        window.editFeature = (id, title, icon, desc) => {
-            document.getElementById("editDocId").value = id;
-            document.getElementById("featureTitle").value = title;
-            document.getElementById("featureIcon").value = icon;
-            document.getElementById("featureDesc").value = desc;
-            document.getElementById("formTitle").innerText = "ফিচার এডিট / কাস্টমাইজ করুন";
-            window.scrollTo({ top: document.getElementById("adminPanelSection").offsetTop - 80, behavior: 'smooth' });
-        };
+      // Log Click Event
+      logTrackingAnalytics(title);
 
-        window.deleteFeature = async (id) => {
-            if (!currentUser) return alert("অনুমতি নেই!");
-            if (confirm("আপনি কি নিশ্চিতভাবে এই ফিচারটি মুছে ফেলতে চান?")) {
-                await deleteDoc(doc(db, "system_features", id));
-            }
-        };
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin"></i> রিডাইরেক্ট হচ্ছে...`;
 
-        window.resetForm = () => {
-            document.getElementById("editDocId").value = "";
-            document.getElementById("featureForm").reset();
-            document.getElementById("formTitle").innerText = "নতুন সার্ভিস / ফিচার যোগ করুন";
-        };
+      setTimeout(() => {
+        window.location.href = finalRedirectUrl;
+      }, 500);
+    }
 
-        function escapeHtml(text) {
-            return text.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+    function logTrackingAnalytics(offerTitle) {
+      const clickData = {
+        timestamp: new Date().toLocaleTimeString('bn-BD'),
+        title: offerTitle,
+        subid: inboundParams.subid || inboundParams.clickid || 'direct_traffic',
+        location: `${currentGeoData.city}, ${currentGeoData.country}`
+      };
+
+      let logs = JSON.parse(localStorage.getItem('cpa_logs') || '[]');
+      logs.unshift(clickData);
+      if(logs.length > 30) logs = logs.slice(0, 30);
+      localStorage.setItem('cpa_logs', JSON.stringify(logs));
+
+      if(isFirebaseConnected && firebaseDb) {
+        push(ref(firebaseDb, 'analytics/clicks'), clickData).catch(e => console.warn(e));
+      }
+
+      updateAdminDashboardStats();
+    }
+
+    /* ==========================================================================
+       6. ADMIN CONTROL PANEL ENGINE
+       ========================================================================== */
+    function renderAdminOffers() {
+      const container = document.getElementById('admin-offers-container');
+      if(!container) return;
+
+      container.innerHTML = localState.offers.map((off, idx) => `
+        <div class="bg-slate-900 p-4 rounded-2xl border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <img src="${escapeHTML(off.mediaUrl)}" class="w-12 h-12 rounded-xl object-cover bg-slate-950" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-bold text-white text-sm">${escapeHTML(off.title)}</h4>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${off.active ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-500'}">
+                  ${off.active ? 'ACTIVE' : 'INACTIVE'}
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 font-mono truncate max-w-xs">${escapeHTML(off.url)}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="window.editAdminOffer(${idx})" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-lg transition">এডিট</button>
+            <button onclick="window.deleteAdminOffer(${idx})" class="px-3 py-1.5 bg-red-500/20 hover:bg-red-600 text-red-300 text-xs font-semibold rounded-lg transition">ডিলিট</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateAdminDashboardStats() {
+      const views = parseInt(localStorage.getItem('cpa_views') || '1');
+      const logs = JSON.parse(localStorage.getItem('cpa_logs') || '[]');
+      const activeOffers = localState.offers.filter(o => o.active).length;
+      const ctr = ((logs.length / views) * 100).toFixed(1);
+
+      document.getElementById('adm-stat-views').textContent = views;
+      document.getElementById('adm-stat-clicks').textContent = logs.length;
+      document.getElementById('adm-stat-ctr').textContent = `${ctr}%`;
+      document.getElementById('adm-stat-offers').textContent = activeOffers;
+
+      const tbody = document.getElementById('admin-logs-tbody');
+      if(tbody) {
+        if(logs.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">কোনো ক্লিক লগ রেকর্ড করা হয়নি।</td></tr>`;
+        } else {
+          tbody.innerHTML = logs.slice(0, 10).map(l => `
+            <tr>
+              <td class="p-3 font-mono text-slate-400">${escapeHTML(l.timestamp)}</td>
+              <td class="p-3 font-bold text-white">${escapeHTML(l.title)}</td>
+              <td class="p-3 text-emerald-400">${escapeHTML(l.location)}</td>
+              <td class="p-3 font-mono text-accent-400">${escapeHTML(l.subid)}</td>
+            </tr>
+          `).join('');
+        }
+      }
+    }
+
+    function populateAdminInputs() {
+      const s = localState.settings;
+      document.getElementById('setting-theme').value = s.theme || 'default-twilight';
+      document.getElementById('setting-brand').value = s.brandName || '';
+      document.getElementById('setting-badge').value = s.heroBadge || '';
+      document.getElementById('setting-headline').value = s.heroHeadline || '';
+      document.getElementById('setting-subtext').value = s.heroSubtext || '';
+      document.getElementById('setting-cta').value = s.heroCta || '';
+      document.getElementById('setting-default-city').value = s.defaultCity || 'ঢাকা';
+      document.getElementById('setting-default-country').value = s.defaultCountry || 'বাংলাদেশ';
+    }
+
+    async function saveAdminSettings() {
+      localState.settings.theme = document.getElementById('setting-theme').value;
+      localState.settings.brandName = document.getElementById('setting-brand').value;
+      localState.settings.heroBadge = document.getElementById('setting-badge').value;
+      localState.settings.heroHeadline = document.getElementById('setting-headline').value;
+      localState.settings.heroSubtext = document.getElementById('setting-subtext').value;
+      localState.settings.heroCta = document.getElementById('setting-cta').value;
+      localState.settings.defaultCity = document.getElementById('setting-default-city').value;
+      localState.settings.defaultCountry = document.getElementById('setting-default-country').value;
+
+      applyThemeAndSettings();
+
+      if(isFirebaseConnected && firebaseDb) {
+        try {
+          await set(ref(firebaseDb, 'app/settings'), localState.settings);
+          await set(ref(firebaseDb, 'app/offers'), localState.offers);
+          showToastNotification('ফায়ারবেসে সেটিং সফলভাবে আপডেট হয়েছে!', 'success');
+        } catch(e) {
+          showToastNotification('ফায়ারবেস আপডেট ব্যর্থ। লোকালভাবে সেভ হয়েছে।', 'error');
+        }
+      } else {
+        showToastNotification('লোকালভাবে সেটিংস সেভ করা হয়েছে!', 'success');
+      }
+      updateFirebaseDiagnostics("Settings Updated Successfully", "SAVED", "bg-emerald-500/20 text-emerald-400");
+    }
+
+    /* Global Handlers for Edit & Delete Offers */
+    window.editAdminOffer = function(index) {
+      const off = localState.offers[index];
+      document.getElementById('offer-edit-id').value = index;
+      document.getElementById('off-input-title').value = off.title;
+      document.getElementById('off-input-desc').value = off.description;
+      document.getElementById('off-input-url').value = off.url;
+      document.getElementById('off-input-cta').value = off.ctaText;
+      document.getElementById('off-input-badge').value = off.badge;
+      document.getElementById('off-input-rating').value = off.rating;
+      document.getElementById('off-input-media').value = off.mediaUrl;
+      document.getElementById('off-input-active').checked = off.active;
+
+      document.getElementById('offer-modal-title').textContent = "অফার এডিট করুন";
+      document.getElementById('offer-modal').classList.remove('hidden');
+    };
+
+    window.deleteAdminOffer = function(index) {
+      if(confirm("আপনি কি নিশ্চিতভাবে এই অফারটি ডিলিট করতে চান?")) {
+        localState.offers.splice(index, 1);
+        renderAdminOffers();
+        renderPublicOffers();
+        saveAdminSettings();
+      }
+    };
+
+    /* ==========================================================================
+       7. UTILITIES & ROUTER
+       ========================================================================== */
+    function showToastNotification(msg, type = "info") {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `p-4 rounded-xl text-xs font-bold text-white shadow-2xl flex items-center gap-2 pointer-events-auto transform transition duration-300 translate-y-2 ${type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-red-600' : 'bg-slate-800'}`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i> <span>${escapeHTML(msg)}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
+    function escapeHTML(str) {
+      if(!str) return '';
+      return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+
+    function handleClientRouting() {
+      const isAdmin = window.location.hash === '#admin' || window.location.search.includes('admin=1');
+      const publicView = document.getElementById('app-public');
+      const adminView = document.getElementById('app-admin');
+
+      if(isAdmin) {
+        publicView.classList.add('hidden');
+        adminView.classList.remove('hidden');
+        if(isFirebaseConnected && firebaseAuth.currentUser) {
+          showAdminDashboard();
+        } else if(!isFirebaseConnected) {
+          showAdminDashboard();
+        } else {
+          showAdminLogin();
+        }
+      } else {
+        adminView.classList.add('hidden');
+        publicView.classList.remove('hidden');
+        
+        // Track View
+        let views = parseInt(localStorage.getItem('cpa_views') || '0') + 1;
+        localStorage.setItem('cpa_views', views.toString());
+      }
+
+      const loader = document.getElementById('global-loader');
+      if(loader) loader.classList.add('hidden');
+    }
+
+    function showAdminLogin() {
+      document.getElementById('admin-auth-view').classList.remove('hidden');
+      document.getElementById('admin-dashboard-view').classList.add('hidden');
+    }
+
+    function showAdminDashboard() {
+      document.getElementById('admin-auth-view').classList.add('hidden');
+      document.getElementById('admin-dashboard-view').classList.remove('hidden');
+      populateAdminInputs();
+      renderAdminOffers();
+      updateAdminDashboardStats();
+    }
+
+    /* Parse inbound query parameters */
+    function parseInboundParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      for (const [key, value] of urlParams.entries()) {
+        inboundParams[key.toLowerCase()] = value;
+      }
+    }
+
+    /* ==========================================================================
+       8. SYSTEM INITIALIZATION LISTENERS
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      parseInboundParams();
+      initMotionCanvas();
+      initGPSLocation();
+      initFirebaseSystem();
+      applyThemeAndSettings();
+      renderPublicOffers();
+      handleClientRouting();
+
+      window.addEventListener('hashchange', handleClientRouting);
+
+      // Age Gate Listeners
+      if(!localStorage.getItem('age_verified_18')) {
+        document.getElementById('age-modal').classList.remove('hidden');
+      }
+      document.getElementById('age-btn-accept').addEventListener('click', () => {
+        localStorage.setItem('age_verified_18', 'true');
+        document.getElementById('age-modal').classList.add('hidden');
+      });
+      document.getElementById('age-btn-decline').addEventListener('click', () => {
+        window.location.href = 'https://www.google.com';
+      });
+
+      // Admin Login Listener
+      document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('admin-input-email').value;
+        const pass = document.getElementById('admin-input-password').value;
+
+        if(!isFirebaseConnected) {
+          showToastNotification('ফায়ারবেস আন-কনফিগারড। লোকাল মোডে প্রবেশ করা হচ্ছে...', 'info');
+          showAdminDashboard();
+          return;
         }
 
-        // Global Modal Toggle
-        window.toggleAdminModal = () => {
-            const modal = document.getElementById("loginModal");
-            modal.classList.toggle("hidden");
+        try {
+          await signInWithEmailAndPassword(firebaseAuth, email, pass);
+          showToastNotification('অ্যাডমিন পারমিশন ভেরিফাইড!', 'success');
+        } catch(err) {
+          showToastNotification(`লগইন ব্যর্থ: ${err.message}`, 'error');
+        }
+      });
+
+      // Admin Logout
+      document.getElementById('admin-logout-btn').addEventListener('click', async () => {
+        if(isFirebaseConnected && firebaseAuth) await signOut(firebaseAuth);
+        showToastNotification('সাইন আউট সম্পন্ন হয়েছে', 'info');
+        showAdminLogin();
+      });
+
+      // Admin Save All Button
+      document.getElementById('admin-save-all-btn').addEventListener('click', saveAdminSettings);
+
+      // Refresh GPS Button
+      document.getElementById('refresh-gps-btn')?.addEventListener('click', () => {
+        initGPSLocation();
+        showToastNotification('GPS লোকেশন রিফ্রেশ করা হচ্ছে...', 'info');
+      });
+
+      // Navigation Tabs Listener
+      document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.admin-nav-btn').forEach(b => {
+            b.classList.remove('bg-brand-600', 'text-white');
+            b.classList.add('text-slate-400');
+          });
+          e.currentTarget.classList.add('bg-brand-600', 'text-white');
+          e.currentTarget.classList.remove('text-slate-400');
+
+          const tabId = e.currentTarget.getAttribute('data-tab');
+          document.querySelectorAll('.admin-tab-pane').forEach(p => p.classList.add('hidden'));
+          document.getElementById(tabId).classList.remove('hidden');
+        });
+      });
+
+      // Modal Add Offer Listener
+      document.getElementById('admin-add-offer-btn').addEventListener('click', () => {
+        document.getElementById('offer-modal-form').reset();
+        document.getElementById('offer-edit-id').value = "";
+        document.getElementById('offer-modal-title').textContent = "নতুন অফার যুক্ত করুন";
+        document.getElementById('offer-modal').classList.remove('hidden');
+      });
+
+      document.getElementById('close-offer-modal').addEventListener('click', () => {
+        document.getElementById('offer-modal').classList.add('hidden');
+      });
+
+      document.getElementById('offer-modal-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const editIndex = document.getElementById('offer-edit-id').value;
+        const offerObj = {
+          id: editIndex !== "" ? localState.offers[editIndex].id : `off_${Date.now()}`,
+          title: document.getElementById('off-input-title').value,
+          description: document.getElementById('off-input-desc').value,
+          url: document.getElementById('off-input-url').value,
+          ctaText: document.getElementById('off-input-cta').value,
+          badge: document.getElementById('off-input-badge').value,
+          rating: document.getElementById('off-input-rating').value,
+          mediaUrl: document.getElementById('off-input-media').value,
+          active: document.getElementById('off-input-active').checked
         };
 
-        // Initialize App Operations
-        window.addEventListener("DOMContentLoaded", () => {
-            initLocationTracking();
-            syncFeaturesData();
-        });
-    </script>
+        if(editIndex !== "") {
+          localState.offers[editIndex] = offerObj;
+        } else {
+          localState.offers.push(offerObj);
+        }
+
+        document.getElementById('offer-modal').classList.add('hidden');
+        renderAdminOffers();
+        renderPublicOffers();
+        saveAdminSettings();
+      });
+
+      document.getElementById('clear-logs-btn')?.addEventListener('click', () => {
+        localStorage.removeItem('cpa_logs');
+        updateAdminDashboardStats();
+        showToastNotification('ট্র্যাকিং লগ মুছে ফেলা হয়েছে', 'info');
+      });
+    });
+  </script>
 </body>
 </html>
