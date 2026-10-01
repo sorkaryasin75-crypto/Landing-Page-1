@@ -341,7 +341,7 @@
         <form id="admin-login-form" class="space-y-4">
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Email Address</label>
-            <input type="email" id="login-email" required class="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="admin@example.com">
+            <input type="email" id="login-email" required class="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="sorkaryasin75@gmail.com">
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Password</label>
@@ -724,18 +724,18 @@
     /* ==========================================================================
        1. DEFAULT LOCAL CONFIGURATION & STATE MODEL
        ========================================================================== */
-    const APP_CONFIG = {
-      firebase: {
-        apiKey: "",
-        authDomain: "",
-        databaseURL: "",
-        projectId: "",
-        storageBucket: "",
-        messagingSenderId: "",
-        appId: ""
-      },
+    const firebaseConfig = {
+  apiKey: "AIzaSyAlLIkbyOFu2ekfoKLBCwS0jzi527PLl1w",
+  authDomain: "nivacoins-1da43.firebaseapp.com",
+  databaseURL: "https://nivacoins-1da43-default-rtdb.firebaseio.com",
+  projectId: "nivacoins-1da43",
+  storageBucket: "nivacoins-1da43.firebasestorage.app",
+  messagingSenderId: "804456380994",
+  appId: "1:804456380994:web:923eee6b1ea6b111748bdb",
+  measurementId: "G-VQDM0HQK6J"
+};
       settings: {
-        brandName: "TwilightDating",
+        brandName: "MeetDating",
         logoUrl: "https://cdn-icons-png.flaticon.com/512/2589/2589175.png",
         theme: "twilight-light",
         btnRadius: "9999px",
@@ -773,10 +773,10 @@
     };
 
     let localState = JSON.parse(JSON.stringify(APP_CONFIG));
-    let firebaseApp = null;
-    let firebaseAuth = null;
-    let firebaseDb = null;
-    let isFirebaseConnected = false;
+    let firebaseApp = true;
+    let firebaseAuth = true;
+    let firebaseDb = ture;
+    let isFirebaseConnected = ture;
     let currentInboundParams = {};
 
     /* ==========================================================================
