@@ -1,991 +1,515 @@
 <!DOCTYPE html>
-<html lang="bn" class="h-full">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title id="meta-title">Verified Adult Dating & Matchmaking Portal</title>
-  <meta id="meta-desc" name="description" content="Connect with verified adult singles near your exact location today. Safe, private, and fast matchmaking.">
-  <meta name="robots" content="noindex, nofollow, noarchive">
-  <link rel="icon" id="site-favicon" href="https://cdn-icons-png.flaticon.com/512/2589/2589175.png">
-
-  <!-- Fonts & FontAwesome Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            heading: ['"Outfit"', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              50: 'var(--color-brand-50)',
-              100: 'var(--color-brand-100)',
-              500: 'var(--color-brand-500)',
-              600: 'var(--color-brand-600)',
-              700: 'var(--color-brand-700)',
-            },
-            accent: {
-              500: 'var(--color-accent-500)',
-              600: 'var(--color-accent-600)',
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Advanced Motion Design & Dynamic Theme Engine -->
-  <style>
-    :root {
-      --color-brand-50: #f5f3ff;
-      --color-brand-100: #ede9fe;
-      --color-brand-500: #8b5cf6;
-      --color-brand-600: #7c3aed;
-      --color-brand-700: #6d28d9;
-      --color-accent-500: #ec4899;
-      --color-accent-600: #db2777;
-      --radius-btn: 9999px;
-      --radius-card: 1.25rem;
-    }
-
-    [data-theme="soft-light"] {
-      --color-brand-50: #f0f9ff;
-      --color-brand-100: #e0f2fe;
-      --color-brand-500: #0284c7;
-      --color-brand-600: #0369a1;
-      --color-brand-700: #075985;
-      --color-accent-500: #f43f5e;
-      --color-accent-600: #e11d48;
-    }
-
-    [data-theme="premium-purple"] {
-      --color-brand-50: #faf5ff;
-      --color-brand-100: #f3e8ff;
-      --color-brand-500: #9333ea;
-      --color-brand-600: #7e22ce;
-      --color-brand-700: #6b21a8;
-      --color-accent-500: #f43f5e;
-      --color-accent-600: #e11d48;
-    }
-
-    [data-theme="clean-blue"] {
-      --color-brand-50: #eff6ff;
-      --color-brand-100: #dbeafe;
-      --color-brand-500: #2563eb;
-      --color-brand-600: #1d4ed8;
-      --color-brand-700: #1e40af;
-      --color-accent-500: #10b981;
-      --color-accent-600: #059669;
-    }
-
-    /* Live Animated Dynamic Background Mesh */
-    body {
-      background: linear-gradient(-45deg, #0f172a, #1e1b4b, #2e1065, #312e81, #0284c7);
-      background-size: 400% 400%;
-      animation: ambientGradient 14s ease infinite;
-      min-height: 100vh;
-      color: #f8fafc;
-    }
-
-    @keyframes ambientGradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Visual Motion Animations for Cards & Buttons */
-    @keyframes floatMotion {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(0.5deg); }
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.5), 0 0 40px rgba(124, 58, 237, 0.3); }
-      50% { box-shadow: 0 0 35px rgba(236, 72, 153, 0.8), 0 0 60px rgba(124, 58, 237, 0.6); }
-    }
-
-    @keyframes borderBeam {
-      0% { border-color: rgba(236, 72, 153, 0.8); }
-      50% { border-color: rgba(124, 58, 237, 0.8); }
-      100% { border-color: rgba(236, 72, 153, 0.8); }
-    }
-
-    .motion-card {
-      animation: floatMotion 6s ease-in-out infinite, borderBeam 4s linear infinite;
-    }
-
-    .glass-effect {
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .btn-custom {
-      border-radius: var(--radius-btn);
-    }
-
-    .card-custom {
-      border-radius: var(--radius-card);
-    }
-
-    .animate-glow {
-      animation: pulseGlow 2.5s infinite;
-    }
-
-    /* Video overlay motion graphics style */
-    .motion-badge {
-      background: linear-gradient(90deg, #ec4899, #8b5cf6, #ec4899);
-      background-size: 200% auto;
-      animation: shineGradient 3s linear infinite;
-    }
-
-    @keyframes shineGradient {
-      to { background-position: 200% center; }
-    }
-  </style>
-</head>
-<body class="font-sans antialiased flex flex-col min-h-screen selection:bg-accent-500 selection:text-white">
-
-  <!-- Toast Notification Bar -->
-  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
-  <!-- Global Fullscreen Spinner -->
-  <div id="global-loader" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center transition-opacity duration-300">
-    <div class="relative flex items-center justify-center">
-      <div class="w-20 h-20 border-4 border-brand-500/30 border-t-accent-500 rounded-full animate-spin"></div>
-      <i class="fa-solid fa-heart text-accent-500 absolute text-2xl animate-ping"></i>
-    </div>
-    <p id="loader-text" class="mt-5 text-sm font-bold text-slate-200 tracking-wider">ভেরিফাইড কানেকশন লোড হচ্ছে...</p>
-  </div>
-
-  <!-- Precise Location Detector Modal (Public High Precision GPS) -->
-  <div id="gps-modal" class="fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
-    <div class="glass-effect card-custom max-w-md w-full p-6 text-center shadow-2xl border border-white/20 transform transition-all motion-card">
-      <div class="w-16 h-16 bg-gradient-to-tr from-brand-600 to-accent-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
-        <i class="fa-solid fa-location-crosshairs animate-spin"></i>
-      </div>
-      <h2 class="font-heading text-2xl font-black text-white mb-2">GPS লোকেশন অনুমোদন</h2>
-      <p class="text-slate-300 text-xs mb-6 leading-relaxed">
-        আপনার কাছাকাছি সঠিক অ্যাডাল্ট মেম্বারদের সন্ধান পেতে নিখুঁত জিপিএস সার্ভিস সক্রিয় করুন।
-      </p>
-      <div class="flex flex-col gap-3">
-        <button id="gps-allow-btn" class="py-3 px-6 bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 text-white font-bold rounded-xl shadow-lg transition animate-glow">
-          <i class="fa-solid fa-location-arrow mr-2"></i> জিপিএস লোকেশন সনাক্ত করুন
-        </button>
-        <button id="gps-skip-btn" class="py-2.5 px-6 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl transition">
-          ডিফল্ট স্থান ব্যবহার করুন
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Age Gate Verification Modal -->
-  <div id="age-modal" class="fixed inset-0 z-40 bg-slate-950/90 backdrop-blur-lg flex items-center justify-center p-4 hidden">
-    <div class="glass-effect card-custom max-w-md w-full p-6 text-center shadow-2xl border border-white/20">
-      <div class="w-16 h-16 bg-red-600/20 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-black border border-red-500/40">
-        18+
-      </div>
-      <h2 class="font-heading text-2xl font-extrabold text-white mb-2">বয়স যাচাইকরণ (১৮+)</h2>
-      <p class="text-slate-300 text-xs mb-6 leading-relaxed">
-        এই পোর্টালে প্রাপ্তবয়স্কদের জন্য ডেটিং সার্ভিস রয়েছে। প্রবেশ করতে আপনার বয়স ১৮ বছর বা তার বেশি হতে হবে।
-      </p>
-      <div class="flex gap-3">
-        <button id="age-btn-enter" class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition shadow-lg">
-          আমি ১৮+ বা তার বেশি
-        </button>
-        <button id="age-btn-exit" class="py-3 px-6 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl transition">
-          প্রস্থান
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- PUBLIC USER-FACING LANDING PAGE -->
-  <div id="app-public" class="flex-grow flex flex-col hidden">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Live Tracking & Portal System</title>
     
-    <!-- Top Header Navigation -->
-    <header class="w-full py-4 px-4 sm:px-8 border-b border-white/10 glass-effect sticky top-0 z-30">
-      <div class="max-w-6xl mx-auto flex items-center justify-between">
-        <a href="#" class="flex items-center gap-2">
-          <img id="site-logo" src="https://cdn-icons-png.flaticon.com/512/2589/2589175.png" alt="Logo" class="h-9 w-auto object-contain">
-          <span id="site-brand-name" class="font-heading font-black text-xl sm:text-2xl tracking-tight text-white">
-            Twilight<span class="text-accent-500">Dating</span>
-          </span>
-        </a>
-        
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Vector Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Visual Motion / Animated Elements (GIF Style Motion Effects) -->
+    <style>
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); transform: scale(1); }
+            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 1); transform: scale(1.02); }
+        }
+        @keyframes radarScan {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes floatEffect {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .gif-motion-card {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #172554, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBg 10s ease infinite;
+        }
+        .pulse-live {
+            animation: pulseGlow 2.5s infinite;
+        }
+        .float-card {
+            animation: floatEffect 4s ease-in-out infinite;
+        }
+        .radar-line {
+            transform-origin: center;
+            animation: radarScan 4s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span id="live-online-counter">1,482 অ্যাক্টিভ অনলাইন</span>
-          </span>
-          <div id="geo-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800/80 text-slate-200 border border-slate-700">
-            <i class="fa-solid fa-location-dot text-accent-500"></i>
-            <span id="geo-location-display">মিরপুর, ঢাকা</span>
-          </div>
+            <div class="relative w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center pulse-live">
+                <i class="fa-solid fa-crosshairs text-xl text-white"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-300">GeoPortal Pro</h1>
+                <p class="text-xs text-slate-400">Live Traffic & System Admin Core</p>
+            </div>
         </div>
-      </div>
+
+        <div id="authStatus" class="flex items-center gap-4">
+            <!-- Dynamic Auth Buttons -->
+            <button onclick="toggleAdminModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-lg shadow-indigo-600/30">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span id="adminBtnText">Admin Portal</span>
+            </button>
+        </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8 sm:py-12 flex flex-col gap-10">
-      
-      <!-- Animated Visual Hero Section -->
-      <section class="text-center max-w-3xl mx-auto space-y-6 pt-2">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full motion-badge text-white text-xs sm:text-sm font-extrabold shadow-lg">
-          <i class="fa-solid fa-fire animate-bounce"></i>
-          <span id="hero-badge-text">#১ প্রিমিয়াম লোকাল অ্যাডাল্ট ডেটিং প্ল্যাটফর্ম</span>
-        </div>
-        
-        <h1 id="hero-headline" class="font-heading text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight">
-          আপনার আশেপাশের নতুন সিঙ্গেলদের সাথে দেখা করুন <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-500 via-brand-500 to-amber-400" id="hero-location-text">মিরপুর এলাকায়</span>
-        </h1>
-        
-        <p id="hero-subtext" class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-          আপনার জিও-লোকেশন বিশ্লেষণ করে ভেরিফাইড প্রোফাইল ও তাৎক্ষণিক প্রাইভেট মেসেজিং সার্ভিস প্রদান করা হচ্ছে। সম্পূর্ণ গোপনীয় ও সুরক্ষিত পরিবেশ।
-        </p>
+    <!-- Main Container -->
+    <main class="container mx-auto px-4 py-8 max-w-7xl space-y-8">
 
-        <!-- Primary Animated Call to Action -->
-        <div class="pt-2">
-          <button id="hero-primary-cta" class="cta-trigger w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-brand-600 via-accent-500 to-amber-500 hover:opacity-95 text-white font-black text-lg sm:text-xl btn-custom shadow-2xl transition-all transform hover:-translate-y-1 animate-glow flex items-center justify-center gap-3 mx-auto">
-            <span id="hero-cta-btn-text">এখনই ফ্রিতে যুক্ত হন</span>
-            <i class="fa-solid fa-angles-right text-base animate-pulse"></i>
-          </button>
-        </div>
+        <!-- Live GPS & Traffic Location Module -->
+        <section class="gif-motion-card rounded-2xl p-6 border border-slate-800 shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-3 max-w-xl">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        Real-Time Traffic GPS Active
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-white">আপনার নিখুঁত লাইভ অবস্থান</h2>
+                    <p class="text-slate-300 text-sm">ডিভাইসের জিপিএস সেন্সরের মাধ্যমে আপনার বর্তমান ভৌগোলিক অবস্থান ও নিকটস্থ ট্রাফিক এরিয়া ট্র্যাক করা হচ্ছে।</p>
+                </div>
 
-        <!-- Realtime GPS Status Details Box -->
-        <div id="gps-detail-box" class="p-3 rounded-2xl glass-effect border border-white/10 text-xs text-slate-300 max-w-md mx-auto flex items-center justify-between gap-2 hidden">
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-satellite text-emerald-400 text-sm"></i>
-            <span id="gps-detail-text">GPS Precision Match Verified</span>
-          </div>
-          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-mono">100% Accurate</span>
-        </div>
-      </section>
+                <!-- Animated Radar Display -->
+                <div class="relative w-36 h-36 rounded-full border-2 border-blue-500/30 bg-slate-900/80 flex items-center justify-center float-card shadow-inner">
+                    <div class="absolute inset-0 rounded-full border border-blue-400/20 animate-ping"></div>
+                    <div class="w-28 h-28 rounded-full border border-slate-700 relative flex items-center justify-center">
+                        <div class="absolute w-full h-[1px] bg-blue-500/30"></div>
+                        <div class="absolute h-full w-[1px] bg-blue-500/30"></div>
+                        <div class="w-full h-full rounded-full radar-line bg-gradient-to-tr from-transparent via-transparent to-blue-500/40"></div>
+                        <i class="fa-solid fa-location-dot text-2xl text-blue-400 z-10 animate-bounce"></i>
+                    </div>
+                </div>
+            </div>
 
-      <!-- Dynamic Offers Visual Grid -->
-      <section class="space-y-6">
-        <div class="flex items-center justify-between border-b border-white/10 pb-3">
-          <h2 class="font-heading text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-sparkles text-amber-400 animate-spin"></i> সরাসরি সুযোগ সমূহ
-          </h2>
-          <span class="text-xs font-semibold text-slate-400" id="offers-count-badge">অফার অনুসন্ধান করা হচ্ছে...</span>
-        </div>
+            <!-- GPS Details Table -->
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-slate-800/80 pt-6">
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                    <span class="text-slate-400 text-xs font-medium block mb-1"><i class="fa-solid fa-map-pin text-blue-400 mr-1"></i> অক্ষাংশ ও দ্রাঘিমাংশ</span>
+                    <span id="geoCoords" class="text-slate-200 font-mono text-sm">স্থান নির্ধারণ করা হচ্ছে...</span>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                    <span class="text-slate-400 text-xs font-medium block mb-1"><i class="fa-solid fa-city text-indigo-400 mr-1"></i> নিকটস্থ এলাকা (Near Location)</span>
+                    <span id="geoCity" class="text-slate-200 font-semibold text-sm">ডাটা আপডেট হচ্ছে...</span>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                    <span class="text-slate-400 text-xs font-medium block mb-1"><i class="fa-solid fa-street-view text-emerald-400 mr-1"></i> সম্পূর্ণ সুনির্দিষ্ট ঠিকানা</span>
+                    <span id="geoAddress" class="text-slate-200 text-xs leading-relaxed">অপেক্ষা করুন...</span>
+                </div>
+            </div>
+        </section>
 
-        <div id="offers-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Offers will be dynamically rendered here -->
-        </div>
-      </section>
+        <!-- Public Dynamic Services Section -->
+        <section class="space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-100">সক্রিয় সিস্টেম ফিচারসমূহ</h3>
+                    <p class="text-xs text-slate-400">লাইভ ডাটাবেজ থেকে ডাটা রিয়েলটাইমে লোড হচ্ছে</p>
+                </div>
+                <span id="featureCount" class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">0 Active Modules</span>
+            </div>
 
-      <!-- Live Social Trust Bar -->
-      <section class="glass-effect card-custom p-6 sm:p-8 shadow-2xl border border-white/10 text-center space-y-6">
-        <h3 class="font-heading text-xl font-bold text-white">বাস্তব অভিজ্ঞতা ও ভেরিফাইড পরিসংখ্যান</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div class="p-4 rounded-xl bg-slate-900/60 border border-white/5">
-            <p class="text-2xl font-black text-brand-400 mb-1" id="stat-active-members">২৮,৪৫০+</p>
-            <p class="text-xs text-slate-400 font-semibold">স্থানীয় সক্রিয় ইউজার</p>
-          </div>
-          <div class="p-4 rounded-xl bg-slate-900/60 border border-white/5">
-            <p class="text-2xl font-black text-accent-500 mb-1">৯৯.২%</p>
-            <p class="text-xs text-slate-400 font-semibold">নিরাপদ কানেকশন রেট</p>
-          </div>
-          <div class="p-4 rounded-xl bg-slate-900/60 border border-white/5">
-            <p class="text-2xl font-black text-emerald-400 mb-1">&lt; ২ মিনিট</p>
-            <p class="text-xs text-slate-400 font-semibold">গড় রেসপন্স টাইম</p>
-          </div>
-        </div>
-      </section>
+            <!-- Features Container -->
+            <div id="publicFeaturesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Features rendered dynamically via Firebase -->
+                <div class="col-span-full py-12 text-center text-slate-500">
+                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-blue-500"></i>
+                    <p class="text-sm">Firebase Firestore থেকে ডাটা লোড হচ্ছে...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Panel Section (Locked & Protected) -->
+        <section id="adminPanelSection" class="hidden space-y-6 bg-slate-900 border border-indigo-900/50 p-6 rounded-2xl shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-indigo-600/20 text-indigo-400 rounded-lg border border-indigo-500/30">
+                        <i class="fa-solid fa-user-shield text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Admin Control Panel (Authorized)</h3>
+                        <p class="text-xs text-emerald-400 flex items-center gap-1">
+                            <i class="fa-solid fa-circle-check"></i> UID Connected & Protected
+                        </p>
+                    </div>
+                </div>
+                <button onclick="logoutAdmin()" class="bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 text-xs px-3 py-2 rounded-lg transition">
+                    Logout Admin
+                </button>
+            </div>
+
+            <!-- Add / Edit Feature Form -->
+            <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-4">
+                <h4 class="text-sm font-semibold text-slate-300" id="formTitle">নতুন সার্ভিস / ফিচার যোগ করুন</h4>
+                <form id="featureForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="hidden" id="editDocId" value="">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">ফিচারের নাম</label>
+                        <input type="text" id="featureTitle" required placeholder="উদাহরণ: Realtime GPS Tracker" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">আইকন ক্লাস (FontAwesome)</label>
+                        <input type="text" id="featureIcon" required placeholder="fa-solid fa-satellite" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-slate-400 mb-1">বিস্তারিত বিবরণ</label>
+                        <textarea id="featureDesc" required rows="2" placeholder="সিস্টেম সার্ভিসের সম্পূর্ণ বিবরণ দিন..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500"></textarea>
+                    </div>
+                    <div class="md:col-span-2 flex justify-end gap-2">
+                        <button type="button" onclick="resetForm()" class="bg-slate-800 text-slate-300 px-4 py-2 rounded-lg text-xs hover:bg-slate-700 transition">বাতিল করুন</button>
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg text-xs font-medium transition shadow-lg shadow-indigo-600/30">সেভ করুন</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Admin Live Data Table -->
+            <div class="overflow-x-auto border border-slate-800 rounded-xl">
+                <table class="w-full text-left text-sm text-slate-300">
+                    <thead class="bg-slate-950 text-xs text-slate-400 uppercase border-b border-slate-800">
+                        <tr>
+                            <th class="p-3">আইকন</th>
+                            <th class="p-3">ফিচারের নাম</th>
+                            <th class="p-3">বিবরণ</th>
+                            <th class="p-3 text-right">অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminDataTable" class="divide-y divide-slate-800">
+                        <!-- Dynamic Data -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
     </main>
 
-    <!-- Footer Area -->
-    <footer class="w-full border-t border-white/10 glass-effect py-8 px-4 mt-auto text-center text-xs text-slate-400 space-y-3">
-      <div class="flex flex-wrap justify-center gap-6 font-semibold">
-        <a href="#" class="hover:text-white transition">প্রাইভেসি পলিসি</a>
-        <a href="#" class="hover:text-white transition">সার্ভিস শর্তাবলী</a>
-        <a href="#" class="hover:text-white transition">কুকি পলিসি</a>
-        <a href="#" class="hover:text-white transition">সাপোর্ট সেন্টার</a>
-      </div>
-      <p class="max-w-xl mx-auto text-slate-500 leading-relaxed">
-        ১৮+ অ্যাডাল্ট নোটিশ: এই সাইটের মাধ্যমে তৃতীয় পক্ষের ভেরিফাইড সিপিএ ডেটিং অফার প্রচার করা হয়। সকল ইউজার ১৮ বছরের ঊর্ধ্বে।
-      </p>
-      <p class="font-bold text-slate-500">&copy; 2026 TwilightDating Portal. All Rights Reserved.</p>
+    <!-- Admin Authentication Modal (Locked Protection Protocol) -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl relative">
+            <button onclick="toggleAdminModal()" class="absolute right-4 top-4 text-slate-500 hover:text-slate-300 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-2 mb-6">
+                <div class="w-12 h-12 rounded-full bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">অ্যাডমিন অ্যাক্সেস ভেরিফিকেশন</h3>
+                <p class="text-xs text-slate-400">Firebase Auth & UID Protected Panel</p>
+            </div>
+
+            <form id="adminLoginForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">অ্যাডমিন ইমেইল</label>
+                    <input type="email" id="adminEmail" required placeholder="admin@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">পাসওয়ার্ড</label>
+                    <input type="password" id="adminPassword" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Authorized Admin UID</label>
+                    <input type="text" id="adminUID" required placeholder="Firebase User UID" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 font-mono text-xs">
+                </div>
+                <div id="authError" class="text-xs text-red-400 hidden"></div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg text-sm transition shadow-lg shadow-indigo-600/30">
+                    লগইন ও পারমিশন ভেরিফাই করুন
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+        <p>&copy; 2026 GeoPortal Pro System. All Rights Reserved. Fully Functional Live Architecture.</p>
     </footer>
-  </div>
 
-  <!-- ADMIN PANEL SYSTEM (#admin Route) -->
-  <div id="app-admin" class="flex-grow flex flex-col hidden bg-slate-950 text-slate-100 min-h-screen">
-    
-    <!-- Admin Login Screen -->
-    <div id="admin-login-view" class="flex-grow flex items-center justify-center p-4">
-      <div class="glass-effect card-custom p-8 max-w-md w-full shadow-2xl border border-white/20 space-y-6">
-        <div class="text-center space-y-2">
-          <div class="w-14 h-14 bg-gradient-to-tr from-brand-600 to-accent-500 rounded-2xl flex items-center justify-center mx-auto text-white text-2xl font-bold shadow-lg">
-            <i class="fa-solid fa-user-shield"></i>
-          </div>
-          <h2 class="font-heading text-2xl font-black text-white">অ্যাডমিন প্রোটোকল লগইন</h2>
-          <p class="text-xs text-slate-400">Firebase Authorization & System Verification</p>
-        </div>
+    <!-- Firebase SDK Integration (v10 Modular) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        <form id="admin-login-form" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Admin Email</label>
-            <input type="email" id="login-email" required class="w-full px-4 py-3 bg-slate-900/90 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Password</label>
-            <input type="password" id="login-password" required class="w-full px-4 py-3 bg-slate-900/90 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Connected Admin UID Permission</label>
-            <input type="text" id="login-uid-permission" required class="w-full px-4 py-3 bg-slate-900/90 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Enter Authorized UID String">
-          </div>
-          <button type="submit" id="login-submit-btn" class="w-full py-3.5 bg-gradient-to-r from-brand-600 to-accent-500 hover:from-brand-700 hover:to-accent-600 text-white font-black rounded-xl transition text-sm shadow-xl">
-            লগইন সেশন অ্যাক্টিভেট করুন
-          </button>
-        </form>
-      </div>
-    </div>
+        // ==========================================
+        // 1. FIREBASE CONFIGURATION
+        // (Replace with your actual Firebase project credentials)
+        // ==========================================
+        const firebaseConfig = {
+  apiKey: "AIzaSyDVhHK08A9XYg-RaWozGSorHv0e2pgDzG4",
+  authDomain: "arina-468c4.firebaseapp.com",
+  databaseURL: "https://arina-468c4-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "arina-468c4",
+  storageBucket: "arina-468c4.firebasestorage.app",
+  messagingSenderId: "881029049599",
+  appId: "1:881029049599:web:a641051e14586202d130ca"
+};
 
-    <!-- Authenticated Admin Dashboard -->
-    <div id="admin-dashboard-view" class="flex-grow flex flex-col md:flex-row hidden">
-      <!-- Admin Sidebar Navigation -->
-      <aside class="w-full md:w-64 bg-slate-900 border-r border-slate-800 p-4 flex flex-col justify-between">
-        <div class="space-y-6">
-          <div class="flex items-center gap-3 px-2">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white font-bold text-lg">
-              <i class="fa-solid fa-sliders"></i>
-            </div>
-            <div>
-              <h3 class="font-bold text-sm text-white">CPA System Portal</h3>
-              <p class="text-[10px] text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Firebase Sync Active</p>
-            </div>
-          </div>
+        // Initialize Firebase Services
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const rtdb = getDatabase(app);
 
-          <nav class="space-y-1 text-xs font-semibold">
-            <button data-tab="tab-dashboard" class="nav-tab-btn w-full flex items-center gap-3 px-3 py-3 rounded-xl bg-brand-600 text-white transition">
-              <i class="fa-solid fa-chart-line w-4"></i> ওভারভিউ ও এনালাইটিক্স
-            </button>
-            <button data-tab="tab-offers" class="nav-tab-btn w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition">
-              <i class="fa-solid fa-layer-group w-4"></i> CPA অফার ম্যানেজমেন্ট
-            </button>
-            <button data-tab="tab-appearance" class="nav-tab-btn w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition">
-              <i class="fa-solid fa-paint-roller w-4"></i> ডিজাইন ও থিম কাস্টমাইজেশন
-            </button>
-            <button data-tab="tab-system" class="nav-tab-btn w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition">
-              <i class="fa-solid fa-database w-4"></i> Firestore & Realtime DB
-            </button>
-          </nav>
-        </div>
+        // State Management
+        let currentUser = null;
 
-        <div class="pt-4 border-t border-slate-800 space-y-3">
-          <div class="p-3 bg-slate-950 rounded-xl text-[11px] space-y-1">
-            <p class="text-slate-400 font-bold uppercase">Authorized User</p>
-            <p id="admin-user-email-display" class="font-mono text-emerald-400 truncate">admin@firebase.local</p>
-          </div>
-          <button id="admin-logout-btn" class="w-full py-2.5 bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white font-bold rounded-xl text-xs transition">
-            <i class="fa-solid fa-right-from-bracket mr-1"></i> সাইন আউট
-          </button>
-        </div>
-      </aside>
+        // ==========================================
+        // 2. ACCURATE GPS & NEAR LOCATION ENGINE
+        // ==========================================
+        function initLocationTracking() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.watchPosition(
+                    async (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        
+                        document.getElementById("geoCoords").innerText = `${lat.toFixed(5)}° N, ${lon.toFixed(5)}° E`;
 
-      <!-- Main Admin Content Area -->
-      <main class="flex-grow p-4 sm:p-8 overflow-y-auto max-w-7xl">
-        <div class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900 p-4 rounded-2xl border border-slate-800">
-          <div>
-            <h1 id="admin-tab-title" class="font-heading text-2xl font-black text-white">কন্ট্রোল প্যানেল</h1>
-            <p class="text-xs text-slate-400">রিয়েলটাইম ক্যাম্পেইন মনিটরিং ও কন্ট্রোল</p>
-          </div>
-          <button id="force-save-btn" class="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:opacity-90 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center gap-2">
-            <i class="fa-solid fa-floppy-disk"></i> পরিবর্তন সংরক্ষণ করুন
-          </button>
-        </div>
+                        // Realtime Database-এ ইউজারের লাইভ জিপিএস লোকেশন আপডেট
+                        try {
+                            const userLocRef = ref(rtdb, 'traffic_locations/user_live');
+                            set(userLocRef, {
+                                latitude: lat,
+                                longitude: lon,
+                                timestamp: new Date().toISOString()
+                            });
+                        } catch(e) {
+                            console.log("Realtime DB update note:", e);
+                        }
 
-        <!-- TAB 1: DASHBOARD ANALYTICS -->
-        <div id="tab-dashboard" class="admin-tab-content space-y-6">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
-              <span class="text-xs font-bold text-slate-400 uppercase">মোট পেজ ভিউ</span>
-              <p class="text-3xl font-black text-white mt-1" id="stat-total-views">0</p>
-            </div>
-            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
-              <span class="text-xs font-bold text-slate-400 uppercase">মোট সিটিএ ক্লিক</span>
-              <p class="text-3xl font-black text-accent-500 mt-1" id="stat-total-clicks">0</p>
-            </div>
-            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
-              <span class="text-xs font-bold text-slate-400 uppercase">কনভার্সন রেট (CTR)</span>
-              <p class="text-3xl font-black text-amber-400 mt-1" id="stat-ctr">0.0%</p>
-            </div>
-            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
-              <span class="text-xs font-bold text-slate-400 uppercase">অ্যাক্টিভ অফার</span>
-              <p class="text-3xl font-black text-emerald-400 mt-1" id="stat-active-offers">0</p>
-            </div>
-          </div>
-        </div>
+                        // Reverse Geocoding via OpenStreetMap API (Accurate Near Location)
+                        try {
+                            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                            const data = await res.json();
+                            
+                            if (data && data.address) {
+                                const city = data.address.city || data.address.town || data.address.village || data.address.suburb || "নিকটস্থ এলাকা পাওয়া গেছে";
+                                const fullAddr = data.display_name || "বিস্তারিত এলাকা ডাটাবেজে রেকর্ড করা হয়েছে";
 
-        <!-- TAB 2: OFFERS MANAGEMENT -->
-        <div id="tab-offers" class="admin-tab-content space-y-6 hidden">
-          <div class="flex justify-between items-center">
-            <h3 class="font-bold text-lg text-white">CPA অফার সমূহের তালিকা</h3>
-            <button id="add-offer-btn" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl transition">
-              <i class="fa-solid fa-plus mr-1"></i> নতুন অফার যোগ করুন
-            </button>
-          </div>
-          <div id="admin-offers-list" class="space-y-3">
-            <!-- Dynamic Admin Offers Render Here -->
-          </div>
-        </div>
-
-        <!-- TAB 3: CUSTOMIZER -->
-        <div id="tab-appearance" class="admin-tab-content space-y-6 hidden">
-          <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-base text-white border-b border-slate-800 pb-3">ল্যান্ডিং পেজ কাস্টমাইজেশন</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div>
-                <label class="block font-bold text-slate-300 mb-1">ভিজ্যুয়াল থিম</label>
-                <select id="setting-theme" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-white">
-                  <option value="twilight-light">Twilight Ambient (Dark/Purple)</option>
-                  <option value="soft-light">Soft Sky Blue</option>
-                  <option value="premium-purple">Orchid Violet</option>
-                  <option value="clean-blue">Clean Royal Blue</option>
-                </select>
-              </div>
-              <div>
-                <label class="block font-bold text-slate-300 mb-1">ব্র্যান্ড নাম</label>
-                <input type="text" id="setting-brand-name" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-white">
-              </div>
-              <div>
-                <label class="block font-bold text-slate-300 mb-1">প্রধান হেডলাইন</label>
-                <input type="text" id="setting-hero-headline" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-white">
-              </div>
-              <div>
-                <label class="block font-bold text-slate-300 mb-1">ডিফল্ট ফলব্যাক সিটি</label>
-                <input type="text" id="setting-default-city" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-white">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 4: FIREBASE SYSTEM -->
-        <div id="tab-system" class="admin-tab-content space-y-6 hidden">
-          <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-white text-base border-b border-slate-800 pb-2">Firebase & Firestore রিয়েলটাইম স্ট্যাটাস</h3>
-            <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 font-mono text-xs text-emerald-400 space-y-2">
-              <p id="diag-auth-status">Auth Status: Validating connected UID permission...</p>
-              <p id="diag-db-status">Realtime DB: Active</p>
-              <p id="diag-firestore-status">Firestore DB: Active</p>
-            </div>
-          </div>
-        </div>
-
-      </main>
-    </div>
-  </div>
-
-  <!-- EDIT / ADD OFFER MODAL -->
-  <div id="offer-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 card-custom max-w-md w-full p-6 space-y-4 text-white">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-        <h3 id="offer-modal-title" class="font-bold text-lg">নতুন CPA অফার</h3>
-        <button id="close-offer-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-      </div>
-
-      <form id="offer-form" class="space-y-3 text-xs">
-        <input type="hidden" id="offer-form-id">
-        <div>
-          <label class="block font-bold mb-1">অফার টাইটেল</label>
-          <input type="text" id="offer-input-title" required class="w-full p-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white">
-        </div>
-        <div>
-          <label class="block font-bold mb-1">অফার ডেসক্রিপশন</label>
-          <textarea id="offer-input-desc" required rows="2" class="w-full p-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white"></textarea>
-        </div>
-        <div>
-          <label class="block font-bold mb-1">CPA টার্গেট Destination URL</label>
-          <input type="url" id="offer-input-url" required class="w-full p-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white">
-        </div>
-        <div>
-          <label class="block font-bold mb-1">CTA বাটন টেক্সট</label>
-          <input type="text" id="offer-input-cta" required class="w-full p-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white">
-        </div>
-        <div>
-          <label class="block font-bold mb-1">ছবি URL</label>
-          <input type="text" id="offer-input-image" required class="w-full p-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white">
-        </div>
-        <div class="flex items-center gap-2 pt-2">
-          <input type="checkbox" id="offer-input-active" checked class="w-4 h-4 rounded">
-          <label for="offer-input-active" class="font-bold">অফার সক্রিয় রাখুন</label>
-        </div>
-        <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 font-bold rounded-xl text-white transition mt-2">
-          সংরক্ষণ করুন
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- FIREBASE V10 SDK & ENGINE JAVASCRIPT MODULE -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-    import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    /* ==========================================================================
-       1. FIREBASE CONFIG & SYSTEM INITIAL STATE
-       ========================================================================== */
-    const APP_CONFIG = {
-      firebase: {
-        apiKey: "",
-        authDomain: "",
-        databaseURL: "",
-        projectId: "",
-        storageBucket: "",
-        messagingSenderId: "",
-        appId: ""
-      },
-      // Connected Admin Allowed UID Protocol Array
-      allowedAdminUIDs: [
-        "YOUR_ADMIN_FIREBASE_UID_HERE"
-      ],
-      settings: {
-        brandName: "TwilightDating",
-        logoUrl: "https://cdn-icons-png.flaticon.com/512/2589/2589175.png",
-        theme: "twilight-light",
-        heroBadge: "#১ প্রিমিয়াম লোকাল অ্যাডাল্ট ডেটিং প্ল্যাটফর্ম",
-        heroHeadline: "আপনার আশেপাশের নতুন সিঙ্গেলদের সাথে দেখা করুন",
-        heroSubtext: "আপনার জিও-লোকেশন বিশ্লেষণ করে ভেরিফাইড প্রোফাইল ও তাৎক্ষণিক প্রাইভেট মেসেজিং সার্ভিস প্রদান করা হচ্ছে। সম্পূর্ণ গোপনীয় ও সুরক্ষিত পরিবেশ।",
-        heroCta: "এখনই ফ্রিতে যুক্ত হন",
-        defaultCity: "ঢাকা",
-        defaultCountry: "বাংলাদেশ"
-      },
-      offers: [
-        {
-          id: "offer_1",
-          title: "ভেরিফাইড লোকাল ম্যাচিং রুম",
-          description: "আপনার এলাকায় সরাসরি মেসেজিং এবং ফাস্ট কানেকশন সুবিধা।",
-          url: "https://example.com/cpa-smartlink-1",
-          ctaText: "সরাসরি যুক্ত হন",
-          badge: "VERIFIED NEAR YOU",
-          rating: "4.9",
-          imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
-          active: true
-        },
-        {
-          id: "offer_2",
-          title: "প্রাইভেট অ্যাডাল্ট চ্যাট রুম",
-          description: "তাত্ক্ষণিক ব্যক্তিগত কথা ও গোপন চ্যাটিং এর জন্য প্রস্তুত।",
-          url: "https://example.com/cpa-smartlink-2",
-          ctaText: "চ্যাট রুমে প্রবেশ করুন",
-          badge: "HIGH RESPONSE",
-          rating: "4.8",
-          imageUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
-          active: true
+                                document.getElementById("geoCity").innerText = city;
+                                document.getElementById("geoAddress").innerText = fullAddr;
+                            }
+                        } catch (err) {
+                            document.getElementById("geoCity").innerText = "Network Location Active";
+                            document.getElementById("geoAddress").innerText = "বিস্তারিত লোকেশন সংগৃহীত হচ্ছে...";
+                        }
+                    },
+                    (error) => {
+                        document.getElementById("geoCoords").innerText = "GPS Permission Denied";
+                        document.getElementById("geoCity").innerText = "লোকেশন পারমিশন প্রয়োজন";
+                        document.getElementById("geoAddress").innerText = "অনুগ্যহ করে ব্রাউজারের লোকেশন পারমিশন এলাউ (Allow) করুন।";
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
+            } else {
+                document.getElementById("geoCoords").innerText = "Not Supported";
+            }
         }
-      ]
-    };
 
-    let localState = JSON.parse(JSON.stringify(APP_CONFIG));
-    let firebaseApp = null;
-    let firebaseAuth = null;
-    let firebaseDb = null;
-    let firebaseFirestore = null;
-    let isFirebaseConnected = false;
-    let userLocation = { city: "", region: "", country: "", accurateGPS: false };
-    let inboundQueryParams = {};
+        // ==========================================
+        // 3. FIRESTORE REAL-TIME DATA SYNC (Public & Admin)
+        // ==========================================
+        function syncFeaturesData() {
+            const featuresRef = collection(db, "system_features");
 
-    /* ==========================================================================
-       2. UTILITIES & TOAST ENGINE
-       ========================================================================== */
-    function showToast(msg, type = "info") {
-      const container = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      const bg = type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-red-600' : 'bg-slate-800';
-      toast.className = `${bg} text-white px-4 py-3 rounded-xl shadow-xl text-xs font-bold flex items-center gap-2 transition-all transform duration-300`;
-      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i> <span>${msg}</span>`;
-      container.appendChild(toast);
-      setTimeout(() => toast.remove(), 3500);
-    }
+            onSnapshot(featuresRef, (snapshot) => {
+                const publicGrid = document.getElementById("publicFeaturesGrid");
+                const adminTable = document.getElementById("adminDataTable");
+                const featureCount = document.getElementById("featureCount");
 
-    function hideGlobalLoader() {
-      const loader = document.getElementById('global-loader');
-      if (loader) {
-        loader.classList.add('opacity-0');
-        setTimeout(() => loader.classList.add('hidden'), 300);
-      }
-    }
+                if (snapshot.empty) {
+                    publicGrid.innerHTML = `<div class="col-span-full py-10 text-center text-slate-500">কোন সক্রিয় সিস্টেম ফিচার পাওয়া যায়নি। অ্যাডমিন প্যানেল থেকে যোগ করুন।</div>`;
+                    adminTable.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">ডাটা খালি।</td></tr>`;
+                    featureCount.innerText = "0 Active Modules";
+                    return;
+                }
 
-    function parseURLParams() {
-      const params = new URLSearchParams(window.location.search);
-      for (const [k, v] of params.entries()) {
-        inboundQueryParams[k.toLowerCase()] = v;
-      }
-    }
+                featureCount.innerText = `${snapshot.size} Active Modules`;
+                publicGrid.innerHTML = "";
+                adminTable.innerHTML = "";
 
-    function buildCpaUrl(targetUrl) {
-      if(!targetUrl) return "#";
-      try {
-        const u = new URL(targetUrl);
-        Object.keys(inboundQueryParams).forEach(p => {
-          u.searchParams.set(p, inboundQueryParams[p]);
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const docId = docSnap.id;
+
+                    // Render Public Animated Cards
+                    const card = document.createElement("div");
+                    card.className = "bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-indigo-500/50 transition duration-300 float-card relative group";
+                    card.innerHTML = `
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 rounded-xl group-hover:scale-110 transition">
+                                <i class="${data.icon || 'fa-solid fa-cube'} text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-100 text-base mb-1">${data.title}</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">${data.description}</p>
+                            </div>
+                        </div>
+                    `;
+                    publicGrid.appendChild(card);
+
+                    // Render Admin Table Rows
+                    const row = document.createElement("tr");
+                    row.className = "hover:bg-slate-900/50";
+                    row.innerHTML = `
+                        <td class="p-3"><i class="${data.icon} text-indigo-400 text-base"></i></td>
+                        <td class="p-3 font-medium text-slate-200">${data.title}</td>
+                        <td class="p-3 text-xs text-slate-400 max-w-xs truncate">${data.description}</td>
+                        <td class="p-3 text-right space-x-2">
+                            <button onclick="editFeature('${docId}', '${escapeHtml(data.title)}', '${escapeHtml(data.icon)}', '${escapeHtml(data.description)}')" class="text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded border border-indigo-500/20 bg-indigo-500/10 text-xs">
+                                Edit
+                            </button>
+                            <button onclick="deleteFeature('${docId}')" class="text-red-400 hover:text-red-300 px-2 py-1 rounded border border-red-500/20 bg-red-500/10 text-xs">
+                                Delete
+                            </button>
+                        </td>
+                    `;
+                    adminTable.appendChild(row);
+                });
+            });
+        }
+
+        // ==========================================
+        // 4. ADMIN LOCKED PROTECTION PROTOCOL (AUTH)
+        // ==========================================
+        const loginForm = document.getElementById("adminLoginForm");
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("adminEmail").value;
+            const password = document.getElementById("adminPassword").value;
+            const inputUID = document.getElementById("adminUID").value.trim();
+            const authError = document.getElementById("authError");
+
+            authError.classList.add("hidden");
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Locked UID Verification Check
+                if (user.uid === inputUID) {
+                    toggleAdminModal();
+                    alert("Admin Locked Permission Verified Successfully!");
+                } else {
+                    await signOut(auth);
+                    authError.innerText = "ত্রুটি: প্রদানকৃত Admin UID ভ্যালিড নয়!";
+                    authError.classList.remove("hidden");
+                }
+            } catch (error) {
+                authError.innerText = "লগইন ব্যর্থ: " + error.message;
+                authError.classList.remove("hidden");
+            }
         });
-        return u.toString();
-      } catch(e) {
-        return targetUrl;
-      }
-    }
 
-    /* ==========================================================================
-       3. HIGH PRECISION GPS GEOLOCATION ENGINE
-       ========================================================================== */
-    function initGPSLocation() {
-      const modal = document.getElementById('gps-modal');
-      
-      if ("geolocation" in navigator && !localStorage.getItem('gps_prompted')) {
-        modal.classList.remove('hidden');
-      } else {
-        fallbackGeoIP();
-      }
+        // Track Auth State & Protect Admin Panel
+        onAuthStateChanged(auth, (user) => {
+            const adminSection = document.getElementById("adminPanelSection");
+            const adminBtnText = document.getElementById("adminBtnText");
 
-      document.getElementById('gps-allow-btn').addEventListener('click', () => {
-        modal.classList.add('hidden');
-        localStorage.setItem('gps_prompted', 'true');
-        
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-          const lat = pos.coords.latitude;
-          const lon = pos.coords.longitude;
-          try {
-            // Reverse geocoding via OpenStreetMap/BigDataCloud
-            const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=bn`);
-            const data = await res.json();
-            
-            const city = data.locality || data.city || data.principalSubdivision || localState.settings.defaultCity;
-            userLocation = {
-              city: city,
-              region: data.principalSubdivision || "",
-              country: data.countryName || localState.settings.defaultCountry,
-              accurateGPS: true
-            };
-            updateGeoUI();
-            showToast(`নিখুঁত জিপিএস সনাক্ত হয়েছে: ${city}`, 'success');
-          } catch(e) {
-            fallbackGeoIP();
-          }
-        }, () => {
-          fallbackGeoIP();
-        }, { enableHighAccuracy: true, timeout: 10000 });
-      });
+            if (user) {
+                currentUser = user;
+                adminSection.classList.remove("hidden");
+                adminBtnText.innerText = "Dashboard Active";
+            } else {
+                currentUser = null;
+                adminSection.classList.add("hidden");
+                adminBtnText.innerText = "Admin Portal";
+            }
+        });
 
-      document.getElementById('gps-skip-btn').addEventListener('click', () => {
-        modal.classList.add('hidden');
-        localStorage.setItem('gps_prompted', 'true');
-        fallbackGeoIP();
-      });
-    }
-
-    function fallbackGeoIP() {
-      userLocation.city = inboundQueryParams.city || localState.settings.defaultCity;
-      userLocation.country = localState.settings.defaultCountry;
-      updateGeoUI();
-    }
-
-    function updateGeoUI() {
-      const displayCity = userLocation.city || localState.settings.defaultCity;
-      document.getElementById('geo-location-display').textContent = displayCity;
-      document.getElementById('hero-location-text').textContent = `${displayCity} এলাকায়`;
-      
-      if(userLocation.accurateGPS) {
-        const box = document.getElementById('gps-detail-box');
-        box.classList.remove('hidden');
-        document.getElementById('gps-detail-text').textContent = `GPS লোকেশন ভেরিফাইড: ${displayCity}, ${userLocation.region}`;
-      }
-    }
-
-    /* ==========================================================================
-       4. FIREBASE AUTH, REALTIME DB & FIRESTORE INTEGRATION
-       ========================================================================== */
-    function initFirebase() {
-      const cfg = localState.firebase;
-      if (cfg && cfg.apiKey && cfg.apiKey !== "") {
-        try {
-          firebaseApp = initializeApp(cfg);
-          firebaseAuth = getAuth(firebaseApp);
-          firebaseDb = getDatabase(firebaseApp);
-          firebaseFirestore = getFirestore(firebaseApp);
-          isFirebaseConnected = true;
-          setupFirebaseListeners();
-        } catch(e) {
-          console.warn("Firebase Local Fallback Active", e);
-        }
-      }
-    }
-
-    function setupFirebaseListeners() {
-      if(!isFirebaseConnected) return;
-
-      // Firestore Settings Listener
-      onSnapshot(doc(firebaseFirestore, "app_config", "settings"), (docSnap) => {
-        if (docSnap.exists()) {
-          localState.settings = { ...localState.settings, ...docSnap.data() };
-          renderPublicPage();
-        }
-      });
-
-      // Firestore Offers Listener
-      onSnapshot(collection(firebaseFirestore, "cpa_offers"), (snapshot) => {
-        const offersList = [];
-        snapshot.forEach(d => offersList.push({ id: d.id, ...d.data() }));
-        if(offersList.length > 0) {
-          localState.offers = offersList;
-          renderPublicOffers();
-          renderAdminOffers();
-        }
-      });
-
-      // Auth Listener with Connected UID Permission Protocol
-      onAuthStateChanged(firebaseAuth, (user) => {
-        if(user) {
-          document.getElementById('admin-user-email-display').textContent = user.email;
-        }
-      });
-    }
-
-    /* ==========================================================================
-       5. PUBLIC PAGE RENDERING & CTA CONTROLLER
-       ========================================================================== */
-    function renderPublicPage() {
-      const s = localState.settings;
-      document.documentElement.setAttribute('data-theme', s.theme || 'twilight-light');
-      document.getElementById('site-brand-name').innerHTML = `${s.brandName}<span class="text-accent-500">.</span>`;
-      document.getElementById('hero-badge-text').textContent = s.heroBadge;
-      document.getElementById('hero-headline').childNodes[0].textContent = s.heroHeadline + " ";
-      document.getElementById('hero-subtext').textContent = s.heroSubtext;
-      document.getElementById('hero-cta-btn-text').textContent = s.heroCta;
-      updateGeoUI();
-    }
-
-    function renderPublicOffers() {
-      const container = document.getElementById('offers-grid');
-      const activeOffers = (localState.offers || []).filter(o => o.active);
-      
-      document.getElementById('offers-count-badge').textContent = `${activeOffers.length} টি অফার প্রস্তুত`;
-
-      if(activeOffers.length === 0) {
-        container.innerHTML = `<p class="col-span-full text-center text-slate-400 p-8">বর্তমানে কোনো অফার উপলব্ধ নেই।</p>`;
-        return;
-      }
-
-      const city = userLocation.city || localState.settings.defaultCity;
-
-      container.innerHTML = activeOffers.map(o => `
-        <div class="glass-effect card-custom p-5 shadow-2xl flex flex-col justify-between motion-card">
-          <div class="space-y-3">
-            <div class="relative h-48 w-full rounded-xl overflow-hidden bg-slate-900">
-              <img src="${o.imageUrl}" class="w-full h-full object-cover">
-              <span class="absolute top-3 left-3 bg-slate-950/80 text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase">
-                ${o.badge || 'VERIFIED'}
-              </span>
-              <span class="absolute bottom-3 right-3 bg-amber-400 text-slate-950 text-xs font-bold px-2 py-0.5 rounded">
-                <i class="fa-solid fa-star text-[10px]"></i> ${o.rating || '4.9'}
-              </span>
-            </div>
-            <div>
-              <h3 class="font-heading font-black text-white text-lg">${o.title}</h3>
-              <p class="text-xs text-slate-300 mt-1">${o.description}</p>
-            </div>
-            <p class="text-xs text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check"></i> ${city} এলাকায় সক্রিয়</p>
-          </div>
-          <div class="pt-4">
-            <button data-url="${o.url}" class="cta-trigger w-full py-3 bg-gradient-to-r from-brand-600 to-accent-500 hover:opacity-90 text-white font-black text-xs btn-custom shadow-lg transition flex items-center justify-center gap-2">
-              <span>${o.ctaText}</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-      `).join('');
-
-      document.querySelectorAll('.cta-trigger').forEach(b => {
-        b.addEventListener('click', handleCtaRedirect);
-      });
-    }
-
-    function handleCtaRedirect(e) {
-      e.preventDefault();
-      let target = e.currentTarget.getAttribute('data-url');
-      if(!target && localState.offers.length > 0) target = localState.offers[0].url;
-
-      const finalUrl = buildCpaUrl(target);
-
-      // Log Click Event
-      let clicks = parseInt(localStorage.getItem('cpa_clicks') || '0') + 1;
-      localStorage.setItem('cpa_clicks', clicks.toString());
-
-      if(isFirebaseConnected && firebaseFirestore) {
-        addDoc(collection(firebaseFirestore, "click_logs"), {
-          timestamp: new Date().toISOString(),
-          location: userLocation.city || "Unknown",
-          subid: inboundQueryParams.subid || "direct"
-        }).catch(err => console.warn(err));
-      }
-
-      e.currentTarget.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> রিডাইরেক্ট করা হচ্ছে...`;
-      setTimeout(() => {
-        window.location.href = finalUrl;
-      }, 350);
-    }
-
-    /* ==========================================================================
-       6. ROUTING & ADMIN AUTHORIZATION PROTOCOL
-       ========================================================================== */
-    function handleRouting() {
-      const isAdmin = window.location.hash === '#admin';
-      const pApp = document.getElementById('app-public');
-      const aApp = document.getElementById('app-admin');
-
-      if(isAdmin) {
-        pApp.classList.add('hidden');
-        aApp.classList.remove('hidden');
-      } else {
-        aApp.classList.add('hidden');
-        pApp.classList.remove('hidden');
-        let views = parseInt(localStorage.getItem('cpa_views') || '0') + 1;
-        localStorage.setItem('cpa_views', views.toString());
-      }
-      hideGlobalLoader();
-    }
-
-    function renderAdminOffers() {
-      const list = document.getElementById('admin-offers-list');
-      if(!list) return;
-
-      list.innerHTML = localState.offers.map((o, idx) => `
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
-          <div>
-            <p class="font-bold text-white text-sm">${o.title}</p>
-            <p class="text-slate-400 font-mono">${o.url}</p>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="window.deleteAdminOffer(${idx})" class="px-3 py-1 bg-red-600/30 text-red-400 font-bold rounded-lg hover:bg-red-600 hover:text-white transition">ডিলিট</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    window.deleteAdminOffer = function(idx) {
-      if(confirm("অফারটি মুছে ফেলার বিষয়ে নিশ্চিত?")) {
-        localState.offers.splice(idx, 1);
-        renderAdminOffers();
-        renderPublicOffers();
-      }
-    };
-
-    /* ==========================================================================
-       7. INITIALIZATION ATTACHMENTS
-       ========================================================================== */
-    window.addEventListener('DOMContentLoaded', () => {
-      parseURLParams();
-      initFirebase();
-      initGPSLocation();
-      renderPublicPage();
-      renderPublicOffers();
-      handleRouting();
-
-      window.addEventListener('hashchange', handleRouting);
-
-      // Admin Login Event with Connected UID Check
-      document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-password').value;
-        const uidInput = document.getElementById('login-uid-permission').value;
-
-        if (!isFirebaseConnected) {
-          showToast('Firebase কনফিগার করা নেই। লোকাল বাইপাস অ্যাক্টিভ।', 'info');
-          document.getElementById('admin-login-view').classList.add('hidden');
-          document.getElementById('admin-dashboard-view').classList.remove('hidden');
-          renderAdminOffers();
-          return;
-        }
-
-        try {
-          const cred = await signInWithEmailAndPassword(firebaseAuth, email, pass);
-          if (cred.user && (cred.user.uid === uidInput || APP_CONFIG.allowedAdminUIDs.includes(uidInput))) {
-            showToast('অ্যাডমিন অ্যাক্সেস অনুমোদিত!', 'success');
-            document.getElementById('admin-login-view').classList.add('hidden');
-            document.getElementById('admin-dashboard-view').classList.remove('hidden');
-            renderAdminOffers();
-          } else {
-            showToast('অনুমোদিত Admin UID ম্যাচ করেনি!', 'error');
-          }
-        } catch(err) {
-          showToast(`লগইন ব্যর্থ: ${err.message}`, 'error');
-        }
-      });
-
-      // Admin Save Button
-      document.getElementById('force-save-btn').addEventListener('click', async () => {
-        localState.settings.theme = document.getElementById('setting-theme').value;
-        localState.settings.brandName = document.getElementById('setting-brand-name').value;
-        localState.settings.heroHeadline = document.getElementById('setting-hero-headline').value;
-        localState.settings.defaultCity = document.getElementById('setting-default-city').value;
-
-        renderPublicPage();
-
-        if(isFirebaseConnected && firebaseFirestore) {
-          try {
-            await setDoc(doc(firebaseFirestore, "app_config", "settings"), localState.settings);
-            showToast('Firestore ব্যাকএন্ডে ডেটা সংরক্ষণ সফল!', 'success');
-          } catch(e) {
-            showToast('Firestore আপডেট ব্যর্থ!', 'error');
-          }
-        } else {
-          showToast('পরিবর্তন লোকালি সংরক্ষিত হয়েছে!', 'success');
-        }
-      });
-
-      // Add Offer Form
-      document.getElementById('add-offer-btn').addEventListener('click', () => {
-        document.getElementById('offer-modal').classList.remove('hidden');
-      });
-
-      document.getElementById('close-offer-modal').addEventListener('click', () => {
-        document.getElementById('offer-modal').classList.add('hidden');
-      });
-
-      document.getElementById('offer-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const newOffer = {
-          id: `offer_${Date.now()}`,
-          title: document.getElementById('offer-input-title').value,
-          description: document.getElementById('offer-input-desc').value,
-          url: document.getElementById('offer-input-url').value,
-          ctaText: document.getElementById('offer-input-cta').value,
-          imageUrl: document.getElementById('offer-input-image').value,
-          active: document.getElementById('offer-input-active').checked
+        // Logout Functionality
+        window.logoutAdmin = () => {
+            signOut(auth).then(() => {
+                alert("অ্যাডমিন প্যানেল থেকে সফলভাবে লগআউট করা হয়েছে।");
+            });
         };
-        localState.offers.push(newOffer);
-        document.getElementById('offer-modal').classList.add('hidden');
-        renderAdminOffers();
-        renderPublicOffers();
-        showToast('নতুন অফার যুক্ত করা হয়েছে!', 'success');
-      });
 
-      // Age Verification Buttons
-      document.getElementById('age-btn-enter').addEventListener('click', () => {
-        document.getElementById('age-modal').classList.add('hidden');
-      });
-      document.getElementById('age-btn-exit').addEventListener('click', () => {
-        window.location.href = "https://www.google.com";
-      });
-    });
-  </script>
+        // ==========================================
+        // 5. ADMIN EDIT/CUSTOMIZE/DELETE FEATURES
+        // ==========================================
+        const featureForm = document.getElementById("featureForm");
+        featureForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (!currentUser) return alert("অনুমতি নেই!");
+
+            const docId = document.getElementById("editDocId").value;
+            const title = document.getElementById("featureTitle").value;
+            const icon = document.getElementById("featureIcon").value;
+            const description = document.getElementById("featureDesc").value;
+
+            try {
+                if (docId) {
+                    // Update existing feature
+                    await updateDoc(doc(db, "system_features", docId), {
+                        title, icon, description,
+                        updatedAt: new Date().toISOString()
+                    });
+                } else {
+                    // Add new feature
+                    await addDoc(collection(db, "system_features"), {
+                        title, icon, description,
+                        createdAt: new Date().toISOString()
+                    });
+                }
+                resetForm();
+            } catch (err) {
+                alert("ডাটা সেভ করতে সমস্যা হয়েছে: " + err.message);
+            }
+        });
+
+        window.editFeature = (id, title, icon, desc) => {
+            document.getElementById("editDocId").value = id;
+            document.getElementById("featureTitle").value = title;
+            document.getElementById("featureIcon").value = icon;
+            document.getElementById("featureDesc").value = desc;
+            document.getElementById("formTitle").innerText = "ফিচার এডিট / কাস্টমাইজ করুন";
+            window.scrollTo({ top: document.getElementById("adminPanelSection").offsetTop - 80, behavior: 'smooth' });
+        };
+
+        window.deleteFeature = async (id) => {
+            if (!currentUser) return alert("অনুমতি নেই!");
+            if (confirm("আপনি কি নিশ্চিতভাবে এই ফিচারটি মুছে ফেলতে চান?")) {
+                await deleteDoc(doc(db, "system_features", id));
+            }
+        };
+
+        window.resetForm = () => {
+            document.getElementById("editDocId").value = "";
+            document.getElementById("featureForm").reset();
+            document.getElementById("formTitle").innerText = "নতুন সার্ভিস / ফিচার যোগ করুন";
+        };
+
+        function escapeHtml(text) {
+            return text.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+        }
+
+        // Global Modal Toggle
+        window.toggleAdminModal = () => {
+            const modal = document.getElementById("loginModal");
+            modal.classList.toggle("hidden");
+        };
+
+        // Initialize App Operations
+        window.addEventListener("DOMContentLoaded", () => {
+            initLocationTracking();
+            syncFeaturesData();
+        });
+    </script>
 </body>
 </html>
